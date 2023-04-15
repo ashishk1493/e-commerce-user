@@ -1,6 +1,7 @@
 import * as HttpService from './http.service';
 import {
   ADD_TO_CART,
+  CREATE_ORDER,
   DELETE_CART_BY_PRODUCT_ID_URL,
   GET_ALL_CART_PRODUCTS_URL,
   GET_ALL_PRODUCTS_URL, GET_PRODUCT_BY_ID_URL
@@ -49,3 +50,17 @@ export const deleteCartProductById = (productId) => {
   return HttpService.deleteWithAuth(DELETE_CART_BY_PRODUCT_ID_URL(productId));
 };
 // 
+
+export const orderGanrete = ({
+  address_id,
+  payment_method,
+  shipping_cost,
+  discount
+}) => {
+  return HttpService.putWithAuth(CREATE_ORDER(), {
+    address_id,
+    payment_method,
+    shipping_cost,
+    discount
+  });
+};

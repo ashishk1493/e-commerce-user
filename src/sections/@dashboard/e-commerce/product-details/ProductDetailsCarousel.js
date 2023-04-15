@@ -103,7 +103,7 @@ export default function ProductDetailsCarousel({ product }) {
                   src={'http://localhost:8080' + img}
                   ratio="1/1"
                   onClick={() => handleOpenLightbox('http://localhost:8080' + img)}
-                  sx={{ cursor: 'zoom-in' }}
+                  sx={{ cursor: 'zoom-in', objectFit: "contain !important" }}
                 />
               )
             })}

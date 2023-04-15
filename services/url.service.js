@@ -36,6 +36,8 @@ export const ADD_TO_CART = () => UrlParamsReplace("/user/add-to-cart", {});
 export const GET_ALL_CART_PRODUCTS_URL = () => UrlParamsReplace("/user/cart", {});
 export const DELETE_CART_BY_PRODUCT_ID_URL = (productId) => UrlParamsReplace("/user/delete-cart-product/:productId", { productId });
 
+export const CREATE_ORDER = () => UrlParamsReplace("/user/place-order", {});
+
 // address
 export const GET_ALL_ADDRESS_URL = () => UrlParamsReplace("/user/all-addresses", {});
 export const ADD_ADDRESS_URL = () => UrlParamsReplace("/user/add-address", {});

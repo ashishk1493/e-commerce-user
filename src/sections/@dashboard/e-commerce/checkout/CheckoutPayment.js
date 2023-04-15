@@ -16,9 +16,12 @@ import CheckoutSummary from './CheckoutSummary';
 import CheckoutDelivery from './CheckoutDelivery';
 import CheckoutBillingInfo from './CheckoutBillingInfo';
 import CheckoutPaymentMethods from './CheckoutPaymentMethods';
+import { orderGanrete } from 'services/products.service';
+import { useEffect } from 'react';
 
 // ----------------------------------------------------------------------
-
+var keyId = "rzp_test_EkIEkhaxbaftUk";
+var keySecret = "Y1KHS0epX20bL2O39Wd46CrG";
 const DELIVERY_OPTIONS = [
   {
     value: 0,
@@ -69,6 +72,14 @@ export default function CheckoutPayment() {
 
   const { total, discount, subtotal, shipping } = checkout;
 
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+    console.log("call thay use effect");
+  }, []);
+
   const handleNextStep = () => {
     dispatch(onNextStep());
   };
@@ -104,9 +115,62 @@ export default function CheckoutPayment() {
     formState: { isSubmitting },
   } = methods;
 
+
+
   const onSubmit = async () => {
     try {
-      handleNextStep();
+      // handleNextStep();
+      let res = await orderGanrete({
+        "address_id": "aa8f9df3-ea59-453f-b2e6-3c68dc9566fe",
+        "payment_method": "RAZORPAY",
+        "shipping_cost": 50,
+        "discount": 40
+      })
+      console.log(res, "res--");
+      if (res.data.success == "true") {
+        const options = {
+          key: keyId,
+          amount: Number(100),
+          currency: "INR",
+          name: "PA",
+          description: "Place Order",
+          // image: "/512x512.png",
+          order_id: res.data.data.transaction_id,
+          handler: function (result) {
+            // handlePaymentStatus(result);
+            console.log("call thay gyu handler", result);
+          },
+          // 'callback_url': 'https://www.google.com',
+          // prefill: {
+          //   name: kidWallet.User.fullName,
+          //   email: kidWallet.User.email,
+          //   contact: kidWallet.User.mobile,
+          // },
+          theme: {
+            color: "#FF7878",
+          },
+          retry: { enabled: false },
+        };
+        console.log(options, "oppppp");
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+        rzp.on("payment.failed", function (result) {
+          // window.webengage.track(Webengage.PLAN_CHECKOUT_FAILED, {
+          //   KidId: kidWallet.Kid.id,
+          //   ParentId: kidWallet.User.id,
+          //   Reason: result.error.reason,
+          //   CurrentBalance: kidWallet.amount / 100,
+          //   "Payment Mode": "Razorpay",
+          //   "Total Amount": createdOrder.amount / 100,
+          // });
+          // router.push({
+          //   pathname: /child/${ kidId } / subscription - fail,
+          //   query: {
+          //   kidId: kidId,
+          // },
+          // });
+        });
+      }
     } catch (error) {
       console.error(error);
     }

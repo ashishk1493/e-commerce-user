@@ -158,8 +158,8 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
           </Box>
           &nbsp;{fCurrency(price)}
         </Typography>
-
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        {colors.length ?
+          <Divider sx={{ borderStyle: 'dashed' }} /> : ""}
 
         {colors.length ? <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
