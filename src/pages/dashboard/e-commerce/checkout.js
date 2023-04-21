@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import { Box, Grid, Step, Stepper, Container, StepLabel, StepConnector } from '@mui/material';
 // redux
 import { useDispatch, useSelector } from '../../../redux/store';
-import { getCart, createBilling } from '../../../redux/slices/product';
+import { getCart, createBilling, onGotoStep } from '../../../redux/slices/product';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
@@ -111,9 +111,13 @@ export default function EcommerceCheckout() {
     }
   }, [dispatch, activeStep]);
 
+  useEffect(() => {
+    dispatch(onGotoStep(1));
+  }, [dispatch, activeStep]);
+
   return (
     <Page title="Ecommerce: Checkout">
-      <Container maxWidth={themeStretch ? false : 'lg'} style={{ marginTop: "80px" }}>
+      <Container maxWidth={themeStretch ? false : 'lg'} style={{ marginTop: '80px' }}>
         <HeaderBreadcrumbs
           heading="Checkout"
           links={[

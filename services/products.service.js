@@ -4,7 +4,9 @@ import {
   CREATE_ORDER,
   DELETE_CART_BY_PRODUCT_ID_URL,
   GET_ALL_CART_PRODUCTS_URL,
-  GET_ALL_PRODUCTS_URL, GET_PRODUCT_BY_ID_URL
+  GET_ALL_PRODUCTS_URL,
+  GET_PRODUCT_BY_ID_URL,
+  VERIFY_PAYMENT,
 } from './url.service';
 
 // export const addKid = (kidDetails) => {
@@ -27,7 +29,6 @@ import {
 //   return HttpService.postWithAuth(ADD_MONEY_AND_PLACE_ORDER(parentId, kidId), {amount});
 // };
 
-
 export const getAllProducts = () => {
   return HttpService.getWithOutAuth(GET_ALL_PRODUCTS_URL());
 };
@@ -49,18 +50,16 @@ export const getAllCartProduct = (token) => {
 export const deleteCartProductById = (productId) => {
   return HttpService.deleteWithAuth(DELETE_CART_BY_PRODUCT_ID_URL(productId));
 };
-// 
+//
 
-export const orderGanrete = ({
-  address_id,
-  payment_method,
-  shipping_cost,
-  discount
-}) => {
+export const orderGenerate = ({ address_id, payment_method, shipping_cost, discount }) => {
   return HttpService.putWithAuth(CREATE_ORDER(), {
     address_id,
     payment_method,
     shipping_cost,
-    discount
+    discount,
   });
+};
+export const verifyPayment = (data) => {
+  return HttpService.postWithAuth(VERIFY_PAYMENT(), data);
 };

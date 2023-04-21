@@ -31,12 +31,20 @@ export default function CheckoutBillingInfo({ onBackStep }) {
         <Typography variant="subtitle2" gutterBottom>
           {billing?.receiver}&nbsp;
           <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
-            ({billing?.addressType})
+            ({billing?.place})
           </Typography>
         </Typography>
 
         <Typography variant="body2" gutterBottom>
-          {billing?.fullAddress}
+          {billing?.address +
+            ', ' +
+            billing?.city +
+            ', ' +
+            billing?.state +
+            ', ' +
+            billing?.country +
+            ' - ' +
+            billing?.pin_code}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           {billing?.phone}

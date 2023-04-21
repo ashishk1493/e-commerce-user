@@ -33,21 +33,19 @@ export default function CheckoutBillingAddress() {
 
   const getAddressesInLocal = () => {
     return dispatch(getAllAddressSlice());
-  }
+  };
   useEffect(() => {
-    getAddressesInLocal()
+    getAddressesInLocal();
   }, [dispatch]);
-
 
   useEffect(() => {
     if (userBillAddressList.length) {
       let lstTmp = userBillAddressList.slice().sort((a, b) => Number(b.is_default) - Number(a.is_default));
-      setLstSorted(lstTmp)
+      setLstSorted(lstTmp);
     }
   }, [userBillAddressList]);
 
-
-  console.log(userBillAddressList, "userBillAddressList");
+  console.log(userBillAddressList, 'userBillAddressList');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -71,17 +69,16 @@ export default function CheckoutBillingAddress() {
 
   const deleteAddress = async (addressId) => {
     // dispatch(increaseQuantity(productId));
-    const response = await deleteAddressById(addressId)
-    if (response.data.success == "true") {
-      console.log(response.data.message, "response true");
-      PAnotifySuccess(response.data.message)
-      getAddressesInLocal()
+    const response = await deleteAddressById(addressId);
+    if (response.data.success == 'true') {
+      console.log(response.data.message, 'response true');
+      PAnotifySuccess(response.data.message);
+      getAddressesInLocal();
     } else {
-      PAnotifyError(response.data.message)
-      console.log(response.data.message, "response false");
+      PAnotifyError(response.data.message);
+      console.log(response.data.message, 'response false');
     }
   };
-
 
   return (
     <>
@@ -89,15 +86,16 @@ export default function CheckoutBillingAddress() {
         <Grid item xs={12} md={8}>
           {/* const trueFirst = arr.sort((a, b) => Number(b.bool) - Number(a.bool)); */}
 
-          {lstSorted.length && lstSorted.map((address, index) => (
-            <AddressItem
-              key={index}
-              address={address}
-              onNextStep={handleNextStep}
-              onCreateBilling={handleCreateBilling}
-              deleteAddress={deleteAddress}
-            />
-          ))}
+          {lstSorted.length &&
+            lstSorted.map((address, index) => (
+              <AddressItem
+                key={index}
+                address={address}
+                onNextStep={handleNextStep}
+                onCreateBilling={handleCreateBilling}
+                deleteAddress={deleteAddress}
+              />
+            ))}
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button
               size="small"
@@ -149,7 +147,6 @@ AddressItem.propTypes = {
 };
 
 function AddressItem({ address, onNextStep, onCreateBilling, deleteAddress }) {
-
   const handleCreateBilling = () => {
     onCreateBilling(address);
     onNextStep();

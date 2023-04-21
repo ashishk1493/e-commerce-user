@@ -41,6 +41,7 @@ export default function CheckoutSummary({
   enableDiscount = false,
 }) {
   const displayShipping = shipping !== null ? 'Free' : '-';
+  const gst = (total / 100) * 10;
 
   return (
     <Card sx={{ mb: 3 }}>
@@ -61,21 +62,28 @@ export default function CheckoutSummary({
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Sub Total
             </Typography>
-            <Typography variant="subtitle2">{fCurrency(subtotal)}</Typography>
+            <Typography variant="subtitle2">{'₹ ' + subtotal}</Typography>
           </Stack>
 
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Discount
             </Typography>
-            <Typography variant="subtitle2">{discount ? fCurrency(-discount) : '-'}</Typography>
+            <Typography variant="subtitle2">{discount ? '₹ ' + -discount : '-'}</Typography>
           </Stack>
 
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Shipping
             </Typography>
-            <Typography variant="subtitle2">{shipping ? fCurrency(shipping) : displayShipping}</Typography>
+            <Typography variant="subtitle2">{shipping ? '₹ ' + shipping : displayShipping}</Typography>
+          </Stack>
+
+          <Stack direction="row" justifyContent="space-between">
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              GST
+            </Typography>
+            <Typography variant="subtitle2">{'₹ ' + gst}</Typography>
           </Stack>
 
           <Divider />
@@ -84,7 +92,7 @@ export default function CheckoutSummary({
             <Typography variant="subtitle1">Total</Typography>
             <Box sx={{ textAlign: 'right' }}>
               <Typography variant="subtitle1" sx={{ color: 'error.main' }}>
-                {fCurrency(total)}
+                {'₹ ' + (total + gst)}
               </Typography>
               <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
                 (VAT included if applicable)
