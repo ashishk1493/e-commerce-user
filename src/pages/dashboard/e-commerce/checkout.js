@@ -111,10 +111,11 @@ export default function EcommerceCheckout() {
     }
   }, [dispatch, activeStep]);
 
-  useEffect(() => {
-    dispatch(onGotoStep(1));
-  }, [dispatch, activeStep]);
+  // useEffect(() => {
+  //   dispatch(onGotoStep(0));
+  // }, [dispatch, activeStep]);
 
+  console.log(cart, 'cart#-');
   return (
     <Page title="Ecommerce: Checkout">
       <Container maxWidth={themeStretch ? false : 'lg'} style={{ marginTop: '80px' }}>

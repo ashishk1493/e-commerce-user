@@ -108,7 +108,7 @@ export default function CheckoutSummary({
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <Button onClick={() => onApplyDiscount(5)} sx={{ mr: -0.5 }}>
+                    <Button disabled={total == 0} onClick={() => onApplyDiscount(5)} sx={{ mr: -0.5 }}>
                       Apply
                     </Button>
                   </InputAdornment>

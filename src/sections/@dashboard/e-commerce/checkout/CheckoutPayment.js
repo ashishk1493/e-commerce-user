@@ -118,7 +118,6 @@ export default function CheckoutPayment() {
   console.log(total, discount, shipping, billing, 'infoalfefe#-');
 
   const handlePaymentStatus = async (res) => {
-    console.log(res, 'res##-');
     let verifBody = {
       address_id: billing?.id,
       payment_method: 'NET_BANKING',
@@ -129,7 +128,9 @@ export default function CheckoutPayment() {
       razorpay_signature: res.razorpay_signature,
     };
     let verifyPaymentRes = await verifyPayment(verifBody);
-    console.log(verifyPaymentRes, 'verifyPaymentRes-');
+    if (verifyPaymentRes.data?.success == 'true') {
+      handleNextStep();
+    }
   };
 
   const onSubmit = async (data) => {

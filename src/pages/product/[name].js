@@ -93,7 +93,7 @@ export default function EcommerceProductDetails() {
     dispatch(getProduct(name));
   }, [dispatch, name]);
 
-  console.log(checkout, "checkout-");
+  console.log(checkout, 'checkout-');
 
   // const handleAddCart = (product) => {
   //   dispatch(addCart(product));
@@ -101,28 +101,28 @@ export default function EcommerceProductDetails() {
 
   const handleAddCart = async (product_id) => {
     // let data = await dispatch(addTocart(product_id));
-    const response = await addProductToCart(product_id, cartQty)
-    console.log(response, "response");
-    if (response?.data?.success == "true") {
-      PAnotifySuccess(response.data.message)
-      dispatch(getCartProducts())
+    const response = await addProductToCart(product_id, cartQty);
+    console.log(response, 'response');
+    if (response?.data?.success == 'true') {
+      PAnotifySuccess(response.data.message);
+      dispatch(getCartProducts());
     } else {
       if (response?.data?.message) {
-        PAnotifyError(response.data.message)
+        PAnotifyError(response.data.message);
       }
       if (response?.message) {
-        PAnotifyError(response.message)
+        PAnotifyError(response.message);
       }
     }
   };
 
   const handleGotoStep = (step) => {
-    dispatch(onGotoStep(step));
+    dispatch(onGotoStep(0));
   };
 
   return (
     <Page title="Ecommerce: Product Details">
-      <Container maxWidth={themeStretch ? false : 'lg'} style={{ marginTop: "80px" }}>
+      <Container maxWidth={themeStretch ? false : 'lg'} style={{ marginTop: '80px' }}>
         <HeaderBreadcrumbs
           heading="Product Details"
           links={[
@@ -135,7 +135,7 @@ export default function EcommerceProductDetails() {
               name: 'Shop',
               href: PATH_DASHBOARD.eCommerce.shop,
             },
-            { name: product ? getFirstCharacter(product.name) : "" },
+            { name: product ? getFirstCharacter(product.name) : '' },
           ]}
         />
 
@@ -209,7 +209,6 @@ export default function EcommerceProductDetails() {
         {!product && <SkeletonProduct />}
 
         {error && <Typography variant="h6">404 Product not found</Typography>}
-
       </Container>
       <ToastContainer
         position="top-right"

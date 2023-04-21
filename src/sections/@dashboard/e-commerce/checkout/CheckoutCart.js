@@ -82,7 +82,7 @@ export default function CheckoutCart() {
   const handleApplyDiscount = (value) => {
     dispatch(applyDiscount(value));
   };
-
+  console.log(cart, 'cart-');
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={8}>
@@ -112,7 +112,7 @@ export default function CheckoutCart() {
             <EmptyContent
               title="Cart is empty"
               description="Look like you have no items in your shopping cart."
-              img="https://minimal-assets-api.vercel.app/assets/illustrations/illustration_empty_cart.svg"
+              img="/home/empty_cart.svg"
             />
           )}
         </Card>
