@@ -18,7 +18,16 @@ import { deleteAddressById } from 'services/address.service';
 import { PAnotifyError, PAnotifySuccess } from 'src/utils/tostMessage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // import first
+import styled from '@emotion/styled';
 // ----------------------------------------------------------------------
+
+const NewAddressBtn = styled(Button)({
+  backgroundColor: '#0080003d',
+  padding: '0 10px',
+  '&:hover': {
+    backgroundColor: '#00800094',
+  },
+});
 
 export default function CheckoutBillingAddress() {
   const dispatch = useDispatch();
@@ -44,8 +53,6 @@ export default function CheckoutBillingAddress() {
       setLstSorted(lstTmp);
     }
   }, [userBillAddressList]);
-
-  console.log(userBillAddressList, 'userBillAddressList');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -96,7 +103,7 @@ export default function CheckoutBillingAddress() {
                 deleteAddress={deleteAddress}
               />
             ))}
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
             <Button
               size="small"
               color="inherit"
@@ -105,9 +112,9 @@ export default function CheckoutBillingAddress() {
             >
               Back
             </Button>
-            <Button size="small" onClick={handleClickOpen} startIcon={<Iconify icon={'eva:plus-fill'} />}>
+            <NewAddressBtn size="small" onClick={handleClickOpen} startIcon={<Iconify icon={'eva:plus-fill'} />}>
               Add new address
-            </Button>
+            </NewAddressBtn>
           </Box>
         </Grid>
 

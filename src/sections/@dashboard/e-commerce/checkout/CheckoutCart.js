@@ -54,7 +54,6 @@ export default function CheckoutCart() {
   };
 
   const handleIncreaseQuantity = async (product_id) => {
-    // dispatch(increaseQuantity(productId));
     const response = await addProductToCart(product_id, 1);
     if (response.data.success == 'true') {
       console.log(response.data.message, 'response true');
@@ -62,27 +61,23 @@ export default function CheckoutCart() {
       dispatch(getCartProducts());
     } else {
       PAnotifyError(response.data.message);
-      console.log(response.data.message, 'response false');
     }
   };
 
   const handleDecreaseQuantity = async (product_id) => {
-    // dispatch(increaseQuantity(productId));
     const response = await addProductToCart(product_id, -1);
     if (response.data.success == 'true') {
-      console.log(response.data.message, 'response true');
       PAnotifySuccess(response.data.message);
       dispatch(getCartProducts());
     } else {
       PAnotifyError(response.data.message);
-      console.log(response.data.message, 'response false');
     }
   };
 
   const handleApplyDiscount = (value) => {
     dispatch(applyDiscount(value));
   };
-  console.log(cart, 'cart-');
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={8}>

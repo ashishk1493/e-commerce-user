@@ -41,7 +41,7 @@ export default function CheckoutSummary({
   enableDiscount = false,
 }) {
   const displayShipping = shipping !== null ? 'Free' : '-';
-  const gst = (total / 100) * 10;
+  const gst = (subtotal / 100) * 10;
 
   return (
     <Card sx={{ mb: 3 }}>
@@ -83,7 +83,7 @@ export default function CheckoutSummary({
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               GST
             </Typography>
-            <Typography variant="subtitle2">{'₹ ' + gst}</Typography>
+            <Typography variant="subtitle2">{'₹ ' + gst.toFixed(2)}</Typography>
           </Stack>
 
           <Divider />

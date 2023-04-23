@@ -29,28 +29,30 @@ const DELIVERY_OPTIONS = [
     description: 'Delivered on Monday, August 12',
   },
   {
-    value: 2,
-    title: 'Fast delivery ($2,00)',
+    value: 100,
+    title: 'Fast delivery (₹100,00)',
     description: 'Delivered on Monday, August 5',
   },
 ];
 
 const PAYMENT_OPTIONS = [
   {
-    value: 'paypal',
-    title: 'Pay with Paypal',
-    description: 'You will be redirected to PayPal website to complete your purchase securely.',
-    icons: ['https://minimal-assets-api.vercel.app/assets/icons/ic_paypal.svg'],
+    value: 'razorpay',
+    title: 'Net Banking',
+    description: 'We support Mastercard, Visa Card, Discover and Razorpay.',
+    icons: [],
+    // icons: ['/home/razorpay.webp'],
+    // icons: ['https://minimal-assets-api.vercel.app/assets/icons/ic_paypal.svg'],
   },
-  {
-    value: 'credit_card',
-    title: 'Credit / Debit Card',
-    description: 'We support Mastercard, Visa, Discover and Stripe.',
-    icons: [
-      'https://minimal-assets-api.vercel.app/assets/icons/ic_mastercard.svg',
-      'https://minimal-assets-api.vercel.app/assets/icons/ic_visa.svg',
-    ],
-  },
+  // {
+  //   value: 'credit_card',
+  //   title: 'Credit / Debit Card',
+  //   description: 'We support Mastercard, Visa, Discover and Stripe.',
+  //   icons: [
+  //     'https://minimal-assets-api.vercel.app/assets/icons/ic_mastercard.svg',
+  //     'https://minimal-assets-api.vercel.app/assets/icons/ic_visa.svg',
+  //   ],
+  // },
   {
     value: 'cash',
     title: 'Cash on CheckoutDelivery',
@@ -115,7 +117,7 @@ export default function CheckoutPayment() {
     formState: { isSubmitting },
   } = methods;
 
-  console.log(total, discount, shipping, billing, 'infoalfefe#-');
+  console.log(total, subtotal, discount, shipping, 'infoalfefe#-');
 
   const handlePaymentStatus = async (res) => {
     let verifBody = {
@@ -134,50 +136,51 @@ export default function CheckoutPayment() {
   };
 
   const onSubmit = async (data) => {
-    try {
-      // handleNextStep();
-      let res = await orderGenerate({
-        address_id: billing?.id,
-        payment_method: 'NET_BANKING',
-        shipping_cost: Number(shipping),
-        discount: Number(discount),
-      });
-      console.log(res, 'res--');
-      if (res.data.success == 'true') {
-        const options = {
-          key: keyId,
-          amount: Number(100),
-          currency: 'INR',
-          name: 'PA',
-          description: 'Place Order',
-          // image: "/512x512.png",
-          order_id: res.data.data.transaction_id,
-          handler: function (result) {
-            handlePaymentStatus(result);
-            console.log('call thay gyu handler', result);
-          },
-          prefill: {
-            contact: billing?.phone,
-          },
-          theme: {
-            color: '#FF7878',
-          },
-          retry: { enabled: false },
-        };
-        const rzp = new window.Razorpay(options);
-        rzp.open();
-        rzp.on('payment.failed', function (result) {
-          // router.push({
-          //   pathname: /child/${ kidId } / subscription - fail,
-          //   query: {
-          //   kidId: kidId,
-          // },
-          // });
-        });
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    console.log(data, 'data-');
+    // try {
+    //   // handleNextStep();
+    //   let res = await orderGenerate({
+    //     address_id: billing?.id,
+    //     payment_method: 'NET_BANKING',
+    //     shipping_cost: Number(shipping),
+    //     discount: Number(discount),
+    //   });
+    //   console.log(res, 'res--');
+    //   if (res.data.success == 'true') {
+    //     const options = {
+    //       key: keyId,
+    //       amount: Number(100),
+    //       currency: 'INR',
+    //       name: 'PA',
+    //       description: 'Place Order',
+    //       // image: "/512x512.png",
+    //       order_id: res.data.data.transaction_id,
+    //       handler: function (result) {
+    //         handlePaymentStatus(result);
+    //         console.log('call thay gyu handler', result);
+    //       },
+    //       prefill: {
+    //         contact: billing?.phone,
+    //       },
+    //       theme: {
+    //         color: '#FF7878',
+    //       },
+    //       retry: { enabled: false },
+    //     };
+    //     const rzp = new window.Razorpay(options);
+    //     rzp.open();
+    //     rzp.on('payment.failed', function (result) {
+    //       // router.push({
+    //       //   pathname: /child/${ kidId } / subscription - fail,
+    //       //   query: {
+    //       //   kidId: kidId,
+    //       // },
+    //       // });
+    //     });
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   return (

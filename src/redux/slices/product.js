@@ -82,12 +82,10 @@ const slice = createSlice({
       const subtotal = sum(cart?.map((cartItem) => cartItem.price * cartItem.qty));
       const discount = 0;
       const shipping = 0;
-      const billing = 0;
 
       state.checkout.cart = cart;
       state.checkout.discount = discount;
       state.checkout.shipping = shipping;
-      state.checkout.billing = billing;
       state.checkout.subtotal = subtotal;
       state.checkout.total = subtotal - discount;
     },
@@ -231,8 +229,8 @@ export function getProduct(name) {
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await getProductById(name)
-      console.log(response, "response-");
+      const response = await getProductById(name);
+      console.log(response, 'response-');
       dispatch(slice.actions.getProductSuccess(response.data.data));
     } catch (error) {
       console.error(error);
@@ -242,12 +240,12 @@ export function getProduct(name) {
 }
 
 export function getCartProducts(name) {
-  const auth = getAuth()
+  const auth = getAuth();
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await getAllCartProduct(auth)
-      console.log(response, "response-=");
+      const response = await getAllCartProduct(auth);
+      console.log(response, 'response-=');
       dispatch(getCart(response.data.data));
     } catch (error) {
       console.error(error);

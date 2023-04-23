@@ -57,7 +57,7 @@ export default function CheckoutPaymentMethods({ paymentOptions, cardOptions }) 
           control={control}
           render={({ field, fieldState: { error } }) => (
             <>
-              <RadioGroup row {...field}>
+              <RadioGroup row {...field} style={{ display: 'block' }}>
                 <Stack spacing={2}>
                   {paymentOptions.map((method) => {
                     const { value, title, icons, description } = method;

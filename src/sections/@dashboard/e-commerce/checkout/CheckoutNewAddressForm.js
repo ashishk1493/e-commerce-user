@@ -24,7 +24,15 @@ CheckoutNewAddressForm.propTypes = {
   onCreateBilling: PropTypes.func,
 };
 
-export default function CheckoutNewAddressForm({ open, onClose, onNextStep, onCreateBilling, PAnotifySuccess, PAnotifyError, getAddressesInLocal }) {
+export default function CheckoutNewAddressForm({
+  open,
+  onClose,
+  onNextStep,
+  onCreateBilling,
+  PAnotifySuccess,
+  PAnotifyError,
+  getAddressesInLocal,
+}) {
   const NewAddressSchema = Yup.object().shape({
     receiver: Yup.string().required('Fullname is required'),
     phone: Yup.string().required('Phone is required'),
@@ -67,18 +75,18 @@ export default function CheckoutNewAddressForm({ open, onClose, onNextStep, onCr
         pin_code: data.zipcode,
         country: data.country,
         place: data.addressType,
-        is_default: data.isDefault
-      })
-      console.log(response.data, "response.data");
-      if (response.data.success == "true") {
-        console.log(response.data.message, "response true");
-        onClose()
-        getAddressesInLocal()
-        PAnotifySuccess(response.data.message)
+        is_default: data.isDefault,
+      });
+      console.log(response.data, 'response.data');
+      if (response.data.success == 'true') {
+        console.log(response.data.message, 'response true');
+        onClose();
+        getAddressesInLocal();
+        PAnotifySuccess(response.data.message);
         reset({});
       } else {
-        PAnotifyError(response.data.message)
-        console.log(response.data.message, "response false");
+        PAnotifyError(response.data.message);
+        console.log(response.data.message, 'response false');
       }
     } catch (error) {
       console.error(error);
@@ -87,11 +95,11 @@ export default function CheckoutNewAddressForm({ open, onClose, onNextStep, onCr
 
   const onCloseLocal = () => {
     reset({});
-    onClose()
-  }
+    onClose();
+  };
 
   return (
-    <Dialog fullWidth maxWidth="sm" open={open} onClose={onClose}>
+    <Dialog fullWidth maxWidth="sm" open={open} onClose={onCloseLocal}>
       <DialogTitle>Add new address</DialogTitle>
 
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
