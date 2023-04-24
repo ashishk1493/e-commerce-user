@@ -137,50 +137,49 @@ export default function CheckoutPayment() {
 
   const onSubmit = async (data) => {
     console.log(data, 'data-');
-    // try {
-    //   // handleNextStep();
-    //   let res = await orderGenerate({
-    //     address_id: billing?.id,
-    //     payment_method: 'NET_BANKING',
-    //     shipping_cost: Number(shipping),
-    //     discount: Number(discount),
-    //   });
-    //   console.log(res, 'res--');
-    //   if (res.data.success == 'true') {
-    //     const options = {
-    //       key: keyId,
-    //       amount: Number(100),
-    //       currency: 'INR',
-    //       name: 'PA',
-    //       description: 'Place Order',
-    //       // image: "/512x512.png",
-    //       order_id: res.data.data.transaction_id,
-    //       handler: function (result) {
-    //         handlePaymentStatus(result);
-    //         console.log('call thay gyu handler', result);
-    //       },
-    //       prefill: {
-    //         contact: billing?.phone,
-    //       },
-    //       theme: {
-    //         color: '#FF7878',
-    //       },
-    //       retry: { enabled: false },
-    //     };
-    //     const rzp = new window.Razorpay(options);
-    //     rzp.open();
-    //     rzp.on('payment.failed', function (result) {
-    //       // router.push({
-    //       //   pathname: /child/${ kidId } / subscription - fail,
-    //       //   query: {
-    //       //   kidId: kidId,
-    //       // },
-    //       // });
-    //     });
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    try {
+      let res = await orderGenerate({
+        address_id: billing?.id,
+        payment_method: 'NET_BANKING',
+        shipping_cost: Number(shipping),
+        discount: Number(discount),
+      });
+      console.log(res, 'res--');
+      if (res.data.success == 'true') {
+        const options = {
+          key: keyId,
+          amount: Number(100),
+          currency: 'INR',
+          name: 'PA',
+          description: 'Place Order',
+          // image: "/512x512.png",
+          order_id: res.data.data.transaction_id,
+          handler: function (result) {
+            handlePaymentStatus(result);
+            console.log('call thay gyu handler', result);
+          },
+          prefill: {
+            contact: billing?.phone,
+          },
+          theme: {
+            color: '#FF7878',
+          },
+          retry: { enabled: false },
+        };
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+        rzp.on('payment.failed', function (result) {
+          // router.push({
+          //   pathname: /child/${ kidId } / subscription - fail,
+          //   query: {
+          //   kidId: kidId,
+          // },
+          // });
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
