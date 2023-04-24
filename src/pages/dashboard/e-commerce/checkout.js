@@ -152,7 +152,7 @@ export default function EcommerceCheckout() {
           <>
             {activeStep === 0 && <CheckoutCart />}
             {activeStep === 1 && <CheckoutBillingAddress />}
-            {activeStep === 2 && billing && <CheckoutPayment />}
+            {activeStep === 2 && <CheckoutPayment />}
           </>
         ) : (
           <CheckoutOrderComplete open={isComplete} />

@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router';
 // @mui
 import { styled, useTheme } from '@mui/material/styles';
-import { Box, Button, AppBar, Toolbar, Container } from '@mui/material';
+import { Box, Button, AppBar, Toolbar, Container, Avatar, Popover, Typography } from '@mui/material';
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop';
 import useResponsive from '../../hooks/useResponsive';
@@ -17,6 +17,8 @@ import Label from '../../components/Label';
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
 import navConfig from './MenuConfig';
+import { getAuth } from 'services/identity.service';
+import { useState } from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -56,6 +58,20 @@ export default function MainHeader() {
   const isDesktop = useResponsive('up', 'md');
 
   const isHome = pathname === '/';
+  const auth = getAuth();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
   return (
     <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
@@ -77,31 +93,62 @@ export default function MainHeader() {
         >
           <Logo />
 
-          <Label color="info" sx={{ ml: 1 }}>
+          {/* <Label color="info" sx={{ ml: 1 }}>
             v3.3.0
-          </Label>
+          </Label> */}
           <Box sx={{ flexGrow: 1 }} />
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
+          {!auth.token ?
+            <Button
+              variant="outlined"
+              target="_self"
+              rel="noopener"
+              href="/auth/login/"
+              style={{ marginRight: "10px" }}
+            >
+              Sign in
+            </Button>
+            : ""}
 
-          <Button
-            variant="outlined"
-            target="_blank"
-            rel="noopener"
-            href="https://material-ui.com/store/items/minimal-dashboard/"
-            style={{ marginRight: "10px" }}
-          >
-            Sign in
-          </Button>
+          {!auth.token ?
+            <Button
+              variant="contained"
+              target="_self"
+              rel="noopener"
+              href="/auth/register/"
+            >
+              Sign up
+            </Button>
+            : ""}
 
-          <Button
-            variant="contained"
-            target="_blank"
-            rel="noopener"
-            href="https://material-ui.com/store/items/minimal-dashboard/"
+          {auth.token ?
+            <Avatar
+              alt="Remy Sharp"
+              src="https://minimal-assets-api.vercel.app/assets/images/avatars/avatar_1.jpg"
+              aria-describedby={id}
+              variant="contained"
+              onClick={handleClick}
+              style={{ cursor: 'pointer' }}
+            />
+            : ""}
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
           >
-            Sign up
-          </Button>
+            <Typography sx={{ p: 2 }} style={{ minWidth: '200px' }}>Profile</Typography>
+            <Typography sx={{ p: 2 }} style={{ minWidth: '200px' }}>Logout</Typography>
+          </Popover>
           {/* <Button
             variant="contained"
             target="_blank"

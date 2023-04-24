@@ -40,6 +40,7 @@ export default function CheckoutCart() {
 
   const isEmptyCart = cart?.length === 0;
 
+  console.log(cart, "cart--");
   // getCartProducts
   useEffect(() => {
     dispatch(getCartProducts());
@@ -79,7 +80,7 @@ export default function CheckoutCart() {
   };
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} style={{ marginBottom: '24px' }}>
       <Grid item xs={12} md={8}>
         <Card sx={{ mb: 3 }}>
           <CardHeader

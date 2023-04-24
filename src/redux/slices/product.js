@@ -82,7 +82,7 @@ const slice = createSlice({
       const subtotal = sum(cart?.map((cartItem) => cartItem.price * cartItem.qty));
       const discount = 0;
       const shipping = 0;
-
+      console.log(cart, "cartcart");
       state.checkout.cart = cart;
       state.checkout.discount = discount;
       state.checkout.shipping = shipping;

@@ -53,12 +53,12 @@ const PAYMENT_OPTIONS = [
   //     'https://minimal-assets-api.vercel.app/assets/icons/ic_visa.svg',
   //   ],
   // },
-  {
-    value: 'cash',
-    title: 'Cash on CheckoutDelivery',
-    description: 'Pay with cash when your order is delivered.',
-    icons: [],
-  },
+  // {
+  //   value: 'cash',
+  //   title: 'Cash on CheckoutDelivery',
+  //   description: 'Pay with cash when your order is delivered.',
+  //   icons: [],
+  // },
 ];
 
 const CARDS_OPTIONS = [
@@ -79,7 +79,6 @@ export default function CheckoutPayment() {
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     script.async = true;
     document.body.appendChild(script);
-    console.log('call thay use effect');
   }, []);
 
   const handleNextStep = () => {
@@ -185,7 +184,7 @@ export default function CheckoutPayment() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} style={{ marginBottom: '24px' }}>
         <Grid item xs={12} md={8}>
           <CheckoutDelivery onApplyShipping={handleApplyShipping} deliveryOptions={DELIVERY_OPTIONS} />
           <CheckoutPaymentMethods cardOptions={CARDS_OPTIONS} paymentOptions={PAYMENT_OPTIONS} />

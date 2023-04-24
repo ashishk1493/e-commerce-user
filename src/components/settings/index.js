@@ -22,6 +22,7 @@ import SettingStretch from './SettingStretch';
 import SettingDirection from './SettingDirection';
 import SettingFullscreen from './SettingFullscreen';
 import SettingColorPresets from './SettingColorPresets';
+import CartWidget from 'src/sections/@dashboard/e-commerce/CartWidget';
 
 // ----------------------------------------------------------------------
 
@@ -61,15 +62,15 @@ export default function Settings() {
   const varSidebar =
     themeDirection !== 'rtl'
       ? varFade({
-          distance: NAVBAR.BASE_WIDTH,
-          durationIn: 0.32,
-          durationOut: 0.32,
-        }).inRight
+        distance: NAVBAR.BASE_WIDTH,
+        durationIn: 0.32,
+        durationOut: 0.32,
+      }).inRight
       : varFade({
-          distance: NAVBAR.BASE_WIDTH,
-          durationIn: 0.32,
-          durationOut: 0.32,
-        }).inLeft;
+        distance: NAVBAR.BASE_WIDTH,
+        durationIn: 0.32,
+        durationOut: 0.32,
+      }).inLeft;
 
   useEffect(() => {
     if (open) {
@@ -94,8 +95,8 @@ export default function Settings() {
         onClick={handleClose}
         sx={{ background: 'transparent', zIndex: (theme) => theme.zIndex.drawer + 1 }}
       />
-
-      {!open && <ToggleButton open={open} notDefault={notDefault} onToggle={handleToggle} />}
+      <CartWidget />
+      {/* {!open && <ToggleButton open={open} notDefault={notDefault} onToggle={handleToggle} />} */}
 
       <AnimatePresence>
         {open && (
