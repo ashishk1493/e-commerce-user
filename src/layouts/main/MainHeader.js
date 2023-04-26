@@ -99,7 +99,7 @@ export default function MainHeader() {
           <Box sx={{ flexGrow: 1 }} />
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
-          {!auth.token ?
+          {!auth?.token ?
             <Button
               variant="outlined"
               target="_self"
@@ -111,7 +111,7 @@ export default function MainHeader() {
             </Button>
             : ""}
 
-          {!auth.token ?
+          {!auth?.token ?
             <Button
               variant="contained"
               target="_self"
@@ -122,7 +122,7 @@ export default function MainHeader() {
             </Button>
             : ""}
 
-          {auth.token ?
+          {auth?.token ?
             <Avatar
               alt="Remy Sharp"
               src="https://minimal-assets-api.vercel.app/assets/images/avatars/avatar_1.jpg"
