@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import sum from 'lodash/sum';
 import uniqBy from 'lodash/uniqBy';
 import { getAuth } from 'services/identity.service';
-import { getAllCartProduct, getAllCatProductById, getAllProducts, getProductById } from 'services/products.service';
+import { getAllCartProduct, getAllCategories, getAllProducts, getProductById } from 'services/products.service';
 // utils
 import axios from '../../utils/axios';
 //
@@ -14,7 +14,6 @@ const initialState = {
   isLoading: false,
   error: null,
   products: [],
-  productSimiler: [],
   product: null,
   sortBy: null,
   filters: {
@@ -56,12 +55,16 @@ const slice = createSlice({
       state.products = action.payload;
     },
 
+    getCategoriesSuccess(state, action) {
+      state.isLoading = false;
+      state.categories = action.payload;
+    },
+
     // GET PRODUCT
     getProductSuccess(state, action) {
       state.isLoading = false;
       state.product = action.payload;
     },
-
 
     // GET PRODUCT Cate id
     getProductByCateIdSuccess(state, action) {
@@ -90,7 +93,7 @@ const slice = createSlice({
       const subtotal = sum(cart?.map((cartItem) => cartItem.price * cartItem.qty));
       const discount = 0;
       const shipping = 0;
-      console.log(cart, "cartcart");
+      console.log(cart, 'cartcart');
       state.checkout.cart = cart;
       state.checkout.discount = discount;
       state.checkout.shipping = shipping;
@@ -215,16 +218,17 @@ export const {
   decreaseQuantity,
   sortByProducts,
   filterProducts,
-  getProductByCateIdSuccess
+  getProductByCateIdSuccess,
 } = slice.actions;
 
 // ----------------------------------------------------------------------
 
-export function getProducts() {
+export function getProducts(cat, gender, pricelt, pricegt) {
+  console.log(gender, 'gender--');
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await getAllProducts();
+      const response = await getAllProducts(cat, gender, pricelt, pricegt);
       dispatch(slice.actions.getProductsSuccess(response.data.data.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -271,6 +275,18 @@ export function getCartProducts(name) {
       dispatch(getCart(response.data.data));
     } catch (error) {
       console.error(error);
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function getCategories() {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await getAllCategories();
+      dispatch(slice.actions.getCategoriesSuccess(response.data.data.category));
+    } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };

@@ -24,6 +24,7 @@ import {
   CheckoutOrderComplete,
   CheckoutBillingAddress,
 } from '../../../sections/@dashboard/e-commerce/checkout';
+import { isUnauthorizedRequest } from 'services/identity.service';
 
 // ----------------------------------------------------------------------
 
@@ -106,6 +107,12 @@ export default function EcommerceCheckout() {
   }, [dispatch, isMountedRef, cart]);
 
   useEffect(() => {
+    if (isMountedRef.current) {
+      dispatch(getCart(cart));
+    }
+  }, [dispatch, isMountedRef, cart]);
+
+  useEffect(() => {
     if (activeStep === 1) {
       dispatch(createBilling(null));
     }
@@ -161,3 +168,14 @@ export default function EcommerceCheckout() {
     </Page>
   );
 }
+
+export const getServerSideProps = async ({ req, query }) => {
+  console.log(req.cookies.AUTH, 'req.cookies.AUTH');
+  if (isUnauthorizedRequest(req.cookies.AUTH)) {
+    return { redirect: { destination: '/auth/login', permanent: false } };
+  }
+
+  return {
+    props: {},
+  };
+};

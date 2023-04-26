@@ -99,30 +99,29 @@ export default function MainHeader() {
           <Box sx={{ flexGrow: 1 }} />
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
-          {!auth?.token ?
+          {auth && !auth.token ? (
             <Button
               variant="outlined"
               target="_self"
               rel="noopener"
               href="/auth/login/"
-              style={{ marginRight: "10px" }}
+              style={{ marginRight: '10px' }}
             >
               Sign in
             </Button>
-            : ""}
+          ) : (
+            ''
+          )}
 
-          {!auth?.token ?
-            <Button
-              variant="contained"
-              target="_self"
-              rel="noopener"
-              href="/auth/register/"
-            >
+          {auth && !auth.token ? (
+            <Button variant="contained" target="_self" rel="noopener" href="/auth/register/">
               Sign up
             </Button>
-            : ""}
+          ) : (
+            ''
+          )}
 
-          {auth?.token ?
+          {auth && auth.token ? (
             <Avatar
               alt="Remy Sharp"
               src="https://minimal-assets-api.vercel.app/assets/images/avatars/avatar_1.jpg"
@@ -131,7 +130,9 @@ export default function MainHeader() {
               onClick={handleClick}
               style={{ cursor: 'pointer' }}
             />
-            : ""}
+          ) : (
+            ''
+          )}
           <Popover
             id={id}
             open={open}
@@ -146,8 +147,12 @@ export default function MainHeader() {
               horizontal: 'right',
             }}
           >
-            <Typography sx={{ p: 2 }} style={{ minWidth: '200px' }}>Profile</Typography>
-            <Typography sx={{ p: 2 }} style={{ minWidth: '200px' }}>Logout</Typography>
+            <Typography sx={{ p: 2 }} style={{ minWidth: '200px' }}>
+              Profile
+            </Typography>
+            <Typography sx={{ p: 2 }} style={{ minWidth: '200px' }}>
+              Logout
+            </Typography>
           </Popover>
           {/* <Button
             variant="contained"
