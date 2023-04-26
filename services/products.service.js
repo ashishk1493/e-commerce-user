@@ -6,6 +6,7 @@ import {
   GET_ALL_CART_PRODUCTS_URL,
   GET_ALL_CATEGORIES_URL,
   GET_ALL_PRODUCTS_URL,
+  GET_PRODUCT_BY_CAT_ID_URL,
   GET_PRODUCT_BY_ID_URL,
   VERIFY_PAYMENT,
 } from './url.service';
@@ -40,6 +41,10 @@ export const getAllCategories = () => {
 
 export const getProductById = (productId) => {
   return HttpService.getWithOutAuth(GET_PRODUCT_BY_ID_URL(productId));
+};
+
+export const getAllCatProductById = (category_id, productId) => {
+  return HttpService.getWithOutAuth(GET_PRODUCT_BY_CAT_ID_URL(category_id, productId));
 };
 
 // cart

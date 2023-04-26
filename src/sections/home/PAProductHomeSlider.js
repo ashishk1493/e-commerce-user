@@ -6,6 +6,7 @@ import { ShopProductCard } from "../@dashboard/e-commerce/shop";
 // import { baseUrl } from "./config";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
 export default function PAProductHomeSlider(props) {
     const { products } = props
     const settings = {

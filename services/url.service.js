@@ -33,6 +33,11 @@ export const GET_ALL_PRODUCTS_URL = (cat, gender, pricelt, pricegt) =>
   });
 export const GET_PRODUCT_BY_ID_URL = (productId) => UrlParamsReplace('/user/new-product/:productId', { productId });
 export const GET_ALL_CATEGORIES_URL = () => UrlParamsReplace('/user/all-categories', {});
+export const GET_PRODUCT_BY_CAT_ID_URL = (category_id, productId) =>
+  UrlParamsReplace('/user/all-cat-products/:category_id/:productId', {
+    category_id: category_id,
+    productId: productId,
+  });
 export const ADD_TO_CART = () => UrlParamsReplace('/user/add-to-cart', {});
 export const GET_ALL_CART_PRODUCTS_URL = () => UrlParamsReplace('/user/cart', {});
 export const DELETE_CART_BY_PRODUCT_ID_URL = (productId) =>

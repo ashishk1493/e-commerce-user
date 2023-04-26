@@ -14,7 +14,6 @@ const initialState = {
   isLoading: false,
   error: null,
   products: [],
-  categories: [],
   product: null,
   sortBy: null,
   filters: {
@@ -65,6 +64,12 @@ const slice = createSlice({
     getProductSuccess(state, action) {
       state.isLoading = false;
       state.product = action.payload;
+    },
+
+    // GET PRODUCT Cate id
+    getProductByCateIdSuccess(state, action) {
+      state.isLoading = false;
+      state.productSimiler = action.payload;
     },
 
     //  SORT & FILTER PRODUCTS
@@ -213,6 +218,7 @@ export const {
   decreaseQuantity,
   sortByProducts,
   filterProducts,
+  getProductByCateIdSuccess,
 } = slice.actions;
 
 // ----------------------------------------------------------------------
@@ -224,6 +230,19 @@ export function getProducts(cat, gender, pricelt, pricegt) {
     try {
       const response = await getAllProducts(cat, gender, pricelt, pricegt);
       dispatch(slice.actions.getProductsSuccess(response.data.data.data));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function getProductsBycat(category_id, productId) {
+  return async () => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await getAllCatProductById(category_id, productId);
+      console.log(response, 'response-');
+      dispatch(slice.actions.getProductByCateIdSuccess(response.data.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

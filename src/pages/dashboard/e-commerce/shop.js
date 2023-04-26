@@ -144,7 +144,7 @@ export default function EcommerceShop() {
 
   return (
     <Page title="Ecommerce: Shop">
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : 'lg'} style={{ marginTop: "80px" }}>
         <HeaderBreadcrumbs
           heading="Shop"
           links={[
