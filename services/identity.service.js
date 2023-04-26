@@ -1,20 +1,20 @@
-import Cookies from "universal-cookie";
+import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
 export const getAuth = () => {
-  const auth = cookies.get("AUTH");
+  const auth = cookies.get('AUTH');
 
   return auth;
 };
 
 export const setAuth = (authObject) => {
-  cookies.set("AUTH", JSON.stringify(authObject), { path: "/" });
+  cookies.set('AUTH', JSON.stringify(authObject), { path: '/' });
   return authObject;
 };
 
 export const removeAuth = () => {
-  cookies.remove("AUTH", { path: "/" });
+  cookies.remove('AUTH', { path: '/' });
   return;
 };
 

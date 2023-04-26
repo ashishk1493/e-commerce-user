@@ -8,7 +8,15 @@ import { Box, Tab, Card, Grid, Divider, Container, Typography } from '@mui/mater
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
-import { getProduct, addCart, onGotoStep, addTocart, getCartProducts, getProducts, getProductsBycat } from '../../redux/slices/product';
+import {
+  getProduct,
+  addCart,
+  onGotoStep,
+  addTocart,
+  getCartProducts,
+  getProducts,
+  getProductsBycat,
+} from '../../redux/slices/product';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
@@ -84,9 +92,6 @@ export default function EcommerceProductDetails() {
   const [value, setValue] = useState('1');
   const [cartQty, setCartQty] = useState(1);
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch])
   const { query } = useRouter();
 
   const { name } = query;
@@ -98,22 +103,15 @@ export default function EcommerceProductDetails() {
   }, [dispatch, name]);
 
   useEffect(() => {
-    if (product)
-      if (product.category_id)
+    if (product) {
+      if (product.category_id) {
         dispatch(getProductsBycat(product.category_id, name));
-  }, [dispatch, product]);
-
-
-  console.log(productSimiler, 'productSimiler-');
-
-  // const handleAddCart = (product) => {
-  //   dispatch(addCart(product));
-  // };
+      }
+    }
+  }, [product]);
 
   const handleAddCart = async (product_id) => {
-    // let data = await dispatch(addTocart(product_id));
     const response = await addProductToCart(product_id, cartQty);
-    console.log(response, 'response');
     if (response?.data?.success == 'true') {
       PAnotifySuccess(response.data.message);
       dispatch(getCartProducts());

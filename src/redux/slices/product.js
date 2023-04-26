@@ -2,7 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import sum from 'lodash/sum';
 import uniqBy from 'lodash/uniqBy';
 import { getAuth } from 'services/identity.service';
-import { getAllCartProduct, getAllCategories, getAllProducts, getProductById } from 'services/products.service';
+import {
+  getAllCartProduct,
+  getAllCategories,
+  getAllCatProductById,
+  getAllProducts,
+  getProductById,
+} from 'services/products.service';
 // utils
 import axios from '../../utils/axios';
 //

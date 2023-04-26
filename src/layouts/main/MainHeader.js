@@ -17,7 +17,7 @@ import Label from '../../components/Label';
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
 import navConfig from './MenuConfig';
-import { getAuth } from 'services/identity.service';
+import { getAuth, removeAuth } from 'services/identity.service';
 import { useState } from 'react';
 
 // ----------------------------------------------------------------------
@@ -52,8 +52,7 @@ export default function MainHeader() {
   const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
 
   const theme = useTheme();
-
-  const { pathname } = useRouter();
+  const { pathname, push } = useRouter();
 
   const isDesktop = useResponsive('up', 'md');
 
@@ -68,6 +67,11 @@ export default function MainHeader() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    removeAuth();
+    push('/auth/login');
   };
 
   const open = Boolean(anchorEl);
@@ -147,10 +151,10 @@ export default function MainHeader() {
               horizontal: 'right',
             }}
           >
-            <Typography sx={{ p: 2 }} style={{ minWidth: '200px' }}>
+            <Typography sx={{ p: 2 }} style={{ minWidth: '200px', cursor: 'pointer' }}>
               Profile
             </Typography>
-            <Typography sx={{ p: 2 }} style={{ minWidth: '200px' }}>
+            <Typography sx={{ p: 2 }} style={{ minWidth: '200px', cursor: 'pointer' }} onClick={handleLogout}>
               Logout
             </Typography>
           </Popover>
