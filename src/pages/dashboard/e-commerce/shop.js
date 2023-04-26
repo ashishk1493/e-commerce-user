@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { Container, Typography, Stack } from '@mui/material';
 // redux
 import { useDispatch, useSelector } from '../../../redux/store';
-import { getProducts, filterProducts } from '../../../redux/slices/product';
+import { getProducts, filterProducts, getCategories } from '../../../redux/slices/product';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
@@ -42,7 +42,7 @@ export default function EcommerceShop() {
 
   const [openFilter, setOpenFilter] = useState(false);
 
-  const { products, sortBy, filters } = useSelector((state) => state.product);
+  const { products, sortBy, filters, categories } = useSelector((state) => state.product);
 
   const filteredProducts = applyFilter(products, sortBy, filters);
 
@@ -69,9 +69,38 @@ export default function EcommerceShop() {
     values.colors.length === 0 &&
     values.category === 'All';
 
+  var pricelt = '';
+  var pricegt = '';
+  var cat = '';
+  var genderArr = '';
+
+  if (values) {
+    if (values.priceRange == 'below') {
+      pricelt = 100;
+    } else if (values.priceRange == 'between') {
+      pricelt = 300;
+      pricegt = 100;
+    } else if (values.priceRange == 'above') {
+      pricegt = 300;
+    }
+
+    if (values.category == 'All') {
+      cat = '';
+    } else {
+      cat = values.category;
+    }
+    if (values.gender.length > 0) {
+      genderArr = JSON.stringify(filters.gender);
+    }
+  }
+  console.log(values.gender, 'values.gender-');
   useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+    dispatch(getProducts(cat, genderArr, pricelt, pricegt));
+  }, [dispatch, filters]);
+
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
 
   useEffect(() => {
     dispatch(filterProducts(values));
@@ -111,6 +140,7 @@ export default function EcommerceShop() {
   const handleRemoveRating = () => {
     setValue('rating', '');
   };
+  console.log(filters, 'filters-');
 
   return (
     <Page title="Ecommerce: Shop">
@@ -139,6 +169,7 @@ export default function EcommerceShop() {
           <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
             <FormProvider methods={methods}>
               <ShopFilterSidebar
+                categories={categories}
                 onResetAll={handleResetFilter}
                 isOpen={openFilter}
                 onOpen={handleOpenFilter}
@@ -154,7 +185,7 @@ export default function EcommerceShop() {
           {!isDefault && (
             <>
               <Typography variant="body2" gutterBottom>
-                <strong>{filteredProducts.length}</strong>
+                <strong>{products.length}</strong>
                 &nbsp;Products found
               </Typography>
 
@@ -172,7 +203,7 @@ export default function EcommerceShop() {
           )}
         </Stack>
 
-        <ShopProductList products={filteredProducts} loading={!products.length && isDefault} />
+        <ShopProductList products={products} loading={!products.length && isDefault} />
         <CartWidget />
       </Container>
     </Page>

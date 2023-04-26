@@ -22,7 +22,7 @@ import Iconify from '../../../../components/Iconify';
 import Scrollbar from '../../../../components/Scrollbar';
 import { ColorManyPicker } from '../../../../components/color-utils';
 import { RHFMultiCheckbox, RHFRadioGroup } from '../../../../components/hook-form';
-
+import { capitalizeFirstLetter } from '../../../../../services/helper.service.js';
 // ----------------------------------------------------------------------
 
 export const SORT_BY_OPTIONS = [
@@ -32,17 +32,32 @@ export const SORT_BY_OPTIONS = [
   { value: 'priceAsc', label: 'Price: Low-High' },
 ];
 
-export const FILTER_GENDER_OPTIONS = ['Men', 'Women', 'Kids'];
+// export const FILTER_GENDER_OPTIONS = ['Men', 'Women', 'Kids'];
+export const FILTER_GENDER_OPTIONS = [
+  { value: 'male', label: 'Male' },
+  { value: 'female', label: 'Female' },
+];
 
-export const FILTER_CATEGORY_OPTIONS = ['All', 'Shose', 'Apparel', 'Accessories'];
+// export const FILTER_CATEGORY_OPTIONS = ['All', 'Shose', 'Apparel', 'Accessories'];
+// export const FILTER_CATEGORY_OPTIONS = [
+//   { value: 'All', label: 'All' },
+//   { value: 'facewash', label: 'Facewash' },
+//   { value: 'handwashProducts', label: 'HandwashProducts' },
+//   { value: 'New cate 1', label: 'New cate 1' },
+// ];
 
 export const FILTER_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
 
 export const FILTER_PRICE_OPTIONS = [
-  { value: 'below', label: 'Below $25' },
-  { value: 'between', label: 'Between $25 - $75' },
-  { value: 'above', label: 'Above $75' },
+  { value: 'below', label: 'Below ₹100' },
+  { value: 'between', label: 'Between ₹100 - ₹300' },
+  { value: 'above', label: 'Above ₹300' },
 ];
+// export const FILTER_PRICE_OPTIONS = [
+//   { value: 'below', label: 'Below ₹25' },
+//   { value: 'between', label: 'Between ₹25 - ₹75' },
+//   { value: 'above', label: 'Above ₹75' },
+// ];
 
 export const FILTER_COLOR_OPTIONS = [
   '#00AB55',
@@ -67,8 +82,14 @@ ShopFilterSidebar.propTypes = {
   onClose: PropTypes.func,
 };
 
-export default function ShopFilterSidebar({ isOpen, onResetAll, onOpen, onClose }) {
+export default function ShopFilterSidebar({ isOpen, onResetAll, onOpen, onClose, categories }) {
   const { control } = useFormContext();
+
+  var FILTER_CATEGORY_OPTIONS = [{ value: 'All', label: 'All' }];
+
+  categories?.map((objCat) => {
+    FILTER_CATEGORY_OPTIONS.push({ value: objCat.name, label: capitalizeFirstLetter(objCat.name) });
+  });
 
   return (
     <>
@@ -99,15 +120,25 @@ export default function ShopFilterSidebar({ isOpen, onResetAll, onOpen, onClose 
           <Stack spacing={3} sx={{ p: 3 }}>
             <Stack spacing={1}>
               <Typography variant="subtitle1">Gender</Typography>
-              <RHFMultiCheckbox name="gender" options={FILTER_GENDER_OPTIONS} sx={{ width: 1 }} />
+              <RHFMultiCheckbox
+                name="gender"
+                options={FILTER_GENDER_OPTIONS.map((item) => item.value)}
+                getOptionLabel={FILTER_GENDER_OPTIONS.map((item) => item.label)}
+                sx={{ width: 1 }}
+              />
             </Stack>
 
             <Stack spacing={1}>
               <Typography variant="subtitle1">Category</Typography>
-              <RHFRadioGroup name="category" options={FILTER_CATEGORY_OPTIONS} row={false} />
+              <RHFRadioGroup
+                name="category"
+                options={FILTER_CATEGORY_OPTIONS.map((item) => item.value)}
+                getOptionLabel={FILTER_CATEGORY_OPTIONS.map((item) => item.label)}
+                row={false}
+              />
             </Stack>
 
-            <Stack spacing={1}>
+            {/* <Stack spacing={1}>
               <Typography variant="subtitle1">Colour</Typography>
 
               <Controller
@@ -121,7 +152,7 @@ export default function ShopFilterSidebar({ isOpen, onResetAll, onOpen, onClose 
                   />
                 )}
               />
-            </Stack>
+            </Stack> */}
 
             <Stack spacing={1}>
               <Typography variant="subtitle1">Price</Typography>
@@ -132,7 +163,7 @@ export default function ShopFilterSidebar({ isOpen, onResetAll, onOpen, onClose 
               />
             </Stack>
 
-            <Stack spacing={1}>
+            {/* <Stack spacing={1}>
               <Typography variant="subtitle1">Rating</Typography>
 
               <Controller
@@ -169,7 +200,7 @@ export default function ShopFilterSidebar({ isOpen, onResetAll, onOpen, onClose 
                   </RadioGroup>
                 )}
               />
-            </Stack>
+            </Stack> */}
           </Stack>
         </Scrollbar>
 

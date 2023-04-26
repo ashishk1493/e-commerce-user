@@ -32,9 +32,10 @@ export function RHFCheckbox({ name, ...other }) {
 RHFMultiCheckbox.propTypes = {
   name: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.string),
+  getOptionLabel: PropTypes.arrayOf(PropTypes.string),
 };
 
-export function RHFMultiCheckbox({ name, options, ...other }) {
+export function RHFMultiCheckbox({ name, options, getOptionLabel, ...other }) {
   const { control } = useFormContext();
 
   return (
@@ -47,7 +48,7 @@ export function RHFMultiCheckbox({ name, options, ...other }) {
 
         return (
           <FormGroup>
-            {options.map((option) => (
+            {options.map((option, index) => (
               <FormControlLabel
                 key={option}
                 control={
@@ -56,7 +57,7 @@ export function RHFMultiCheckbox({ name, options, ...other }) {
                     onChange={() => field.onChange(onSelected(option))}
                   />
                 }
-                label={option}
+                label={getOptionLabel?.length ? getOptionLabel[index] : option}
                 {...other}
               />
             ))}

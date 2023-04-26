@@ -4,6 +4,7 @@ import {
   CREATE_ORDER,
   DELETE_CART_BY_PRODUCT_ID_URL,
   GET_ALL_CART_PRODUCTS_URL,
+  GET_ALL_CATEGORIES_URL,
   GET_ALL_PRODUCTS_URL,
   GET_PRODUCT_BY_ID_URL,
   VERIFY_PAYMENT,
@@ -29,8 +30,12 @@ import {
 //   return HttpService.postWithAuth(ADD_MONEY_AND_PLACE_ORDER(parentId, kidId), {amount});
 // };
 
-export const getAllProducts = () => {
-  return HttpService.getWithOutAuth(GET_ALL_PRODUCTS_URL());
+export const getAllProducts = (cat, gender, pricelt, pricegt) => {
+  return HttpService.getWithOutAuth(GET_ALL_PRODUCTS_URL(cat, gender, pricelt, pricegt));
+};
+
+export const getAllCategories = () => {
+  return HttpService.getWithOutAuth(GET_ALL_CATEGORIES_URL());
 };
 
 export const getProductById = (productId) => {
