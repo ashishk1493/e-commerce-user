@@ -15,6 +15,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from 'src/redux/slices/product';
 import APEcommerceWelcome from '../@dashboard/general/e-commerce/APEcommerceWelcome';
 import PAProductHomeSlider from './PAProductHomeSlider';
+import Label from 'src/components/Label';
+import { useRouter } from 'next/router';
+
 // ----------------------------------------------------------------------
 const products = [{
   "id": "e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1",
@@ -256,6 +259,7 @@ const CardStyle = styled(Card)(({ theme }) => {
 
 export default function HomeMinimal() {
   const theme = useTheme();
+  const { pathname, push } = useRouter();
 
   const isLight = theme.palette.mode === 'light';
 
@@ -279,7 +283,13 @@ export default function HomeMinimal() {
             <Typography variant="h3">BEST SELLERS</Typography>
           </div>
         </Box>
-
+        <div style={{ display: "flex", justifyContent: 'right' }}>
+          <Label color="info" sx={{ ml: 1 }} style={{ cursor: "pointer" }}>
+            <div onClick={() => { push('/dashboard/e-commerce/shop/') }}>
+              See All
+            </div>
+          </Label>
+        </div>
         <PAProductHomeSlider products={products} />
         {/* <Box
           sx={{
@@ -306,6 +316,14 @@ export default function HomeMinimal() {
             <Typography variant="h3">NATIONAL CREATIVE DIRECTOR'S PICKS</Typography>
           </div>
         </Box>
+
+        <div style={{ display: "flex", justifyContent: 'right' }}>
+          <Label color="info" sx={{ ml: 1 }} style={{ cursor: "pointer" }}>
+            <div onClick={() => { push('/dashboard/e-commerce/shop/') }}>
+              See All
+            </div>
+          </Label>
+        </div>
         <PAProductHomeSlider products={products} />
 
         {/* <Box

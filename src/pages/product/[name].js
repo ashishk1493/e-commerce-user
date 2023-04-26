@@ -8,7 +8,7 @@ import { Box, Tab, Card, Grid, Divider, Container, Typography } from '@mui/mater
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
-import { getProduct, addCart, onGotoStep, addTocart, getCartProducts } from '../../redux/slices/product';
+import { getProduct, addCart, onGotoStep, addTocart, getCartProducts, getProducts, getProductsBycat } from '../../redux/slices/product';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
@@ -33,6 +33,7 @@ import { addProductToCart } from 'services/products.service';
 import { PAnotifyError, PAnotifySuccess } from 'src/utils/tostMessage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // import first
+import PAProductHomeSlider from 'src/sections/home/PAProductHomeSlider';
 
 // ----------------------------------------------------------------------
 
@@ -83,17 +84,27 @@ export default function EcommerceProductDetails() {
   const [value, setValue] = useState('1');
   const [cartQty, setCartQty] = useState(1);
 
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [dispatch])
   const { query } = useRouter();
 
   const { name } = query;
 
-  const { product, error, checkout } = useSelector((state) => state.product);
+  const { productSimiler, products, product, error, checkout } = useSelector((state) => state.product);
 
   useEffect(() => {
     dispatch(getProduct(name));
   }, [dispatch, name]);
 
-  console.log(checkout, 'checkout-');
+  useEffect(() => {
+    if (product)
+      if (product.category_id)
+        dispatch(getProductsBycat(product.category_id, name));
+  }, [dispatch, product]);
+
+
+  console.log(productSimiler, 'productSimiler-');
 
   // const handleAddCart = (product) => {
   //   dispatch(addCart(product));
@@ -205,7 +216,20 @@ export default function EcommerceProductDetails() {
             </Card>
           </>
         )}
-
+        <div>
+          <Box
+            sx={{
+              textAlign: 'center',
+              mb: { xs: 3, md: 3 },
+              mt: { xs: 3, md: 3 },
+            }}
+          >
+            <div>
+              <Typography variant="h3">Related Products</Typography>
+            </div>
+          </Box>
+          <PAProductHomeSlider products={productSimiler} />
+        </div>
         {!product && <SkeletonProduct />}
 
         {error && <Typography variant="h6">404 Product not found</Typography>}
