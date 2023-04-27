@@ -45,7 +45,7 @@ export default function EcommerceShop() {
   const [openFilter, setOpenFilter] = useState(false);
 
   const { products, sortBy, filters, categories } = useSelector((state) => state.product);
-
+  console.log(sortBy, 'sortBy-');
   const filteredProducts = applyFilter(products, sortBy, filters);
 
   const defaultValues = {
@@ -95,10 +95,20 @@ export default function EcommerceShop() {
       genderArr = JSON.stringify(filters.gender);
     }
   }
-  console.log(values.gender, 'values.gender-');
+  var sort = '';
+  if (sortBy) {
+    if (sortBy == 'newest') {
+      sort = 'newest';
+    } else if (sortBy == 'priceDesc') {
+      sort = 'highToLow';
+    } else if (sortBy == 'priceAsc') {
+      sort = 'lowToHigh';
+    }
+  }
+
   useEffect(() => {
-    dispatch(getProducts(cat, genderArr, pricelt, pricegt));
-  }, [dispatch, filters]);
+    dispatch(getProducts(cat, genderArr, pricelt, pricegt, sort));
+  }, [dispatch, filters, sortBy]);
 
   useEffect(() => {
     dispatch(getCategories());
@@ -216,9 +226,9 @@ export default function EcommerceShop() {
 
 function applyFilter(products, sortBy, filters) {
   // SORT BY
-  if (sortBy === 'featured') {
-    products = orderBy(products, ['sold'], ['desc']);
-  }
+  // if (sortBy === 'featured') {
+  //   products = orderBy(products, ['sold'], ['desc']);
+  // }
   if (sortBy === 'newest') {
     products = orderBy(products, ['createdAt'], ['desc']);
   }
@@ -229,36 +239,36 @@ function applyFilter(products, sortBy, filters) {
     products = orderBy(products, ['price'], ['asc']);
   }
   // FILTER PRODUCTS
-  if (filters.gender.length > 0) {
-    products = products.filter((product) => filters.gender.includes(product.gender));
-  }
-  if (filters.category !== 'All') {
-    products = products.filter((product) => product.category === filters.category);
-  }
-  if (filters.colors.length > 0) {
-    products = products.filter((product) => product.colors.some((color) => filters.colors.includes(color)));
-  }
-  if (filters.priceRange) {
-    products = products.filter((product) => {
-      if (filters.priceRange === 'below') {
-        return product.price < 25;
-      }
-      if (filters.priceRange === 'between') {
-        return product.price >= 25 && product.price <= 75;
-      }
-      return product.price > 75;
-    });
-  }
-  if (filters.rating) {
-    products = products.filter((product) => {
-      const convertRating = (value) => {
-        if (value === 'up4Star') return 4;
-        if (value === 'up3Star') return 3;
-        if (value === 'up2Star') return 2;
-        return 1;
-      };
-      return product.totalRating > convertRating(filters.rating);
-    });
-  }
+  // if (filters.gender.length > 0) {
+  //   products = products.filter((product) => filters.gender.includes(product.gender));
+  // }
+  // if (filters.category !== 'All') {
+  //   products = products.filter((product) => product.category === filters.category);
+  // }
+  // if (filters.colors.length > 0) {
+  //   products = products.filter((product) => product.colors.some((color) => filters.colors.includes(color)));
+  // }
+  // if (filters.priceRange) {
+  //   products = products.filter((product) => {
+  //     if (filters.priceRange === 'below') {
+  //       return product.price < 25;
+  //     }
+  //     if (filters.priceRange === 'between') {
+  //       return product.price >= 25 && product.price <= 75;
+  //     }
+  //     return product.price > 75;
+  //   });
+  // }
+  // if (filters.rating) {
+  //   products = products.filter((product) => {
+  //     const convertRating = (value) => {
+  //       if (value === 'up4Star') return 4;
+  //       if (value === 'up3Star') return 3;
+  //       if (value === 'up2Star') return 2;
+  //       return 1;
+  //     };
+  //     return product.totalRating > convertRating(filters.rating);
+  //   });
+  // }
   return products;
 }

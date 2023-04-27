@@ -47,16 +47,17 @@ export default function HomePage() {
   const { objUserDetails } = useSelector((state) => state.userInfo);
   const router = useRouter();
   const auth = getAuth();
+  console.log(objUserDetails, 'objUserDetails-');
 
   useEffect(() => {
     if (router.query?.isLoggedin) {
       if (auth) {
-        PAnotifySuccess(objUserDetails.message);
-      } else if (objUserDetails.success == 'false') {
-        PAnotifyError(objUserDetails.message);
+        PAnotifySuccess(objUserDetails?.message);
+      } else if (objUserDetails?.success == 'false') {
+        PAnotifyError(objUserDetails?.message);
       }
     }
-  }, [objUserDetails]);
+  }, []);
 
   // useEffect(() => {
   //   if (objUserDetails) {

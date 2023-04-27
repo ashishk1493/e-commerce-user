@@ -43,9 +43,7 @@ const slice = createSlice({
 export default slice.reducer;
 
 // Actions
-export const {
-  setUserDetails
-} = slice.actions;
+export const { setUserDetails } = slice.actions;
 
 // ----------------------------------------------------------------------
 
@@ -54,14 +52,13 @@ export function login_user_slice(email, password) {
     dispatch(slice.actions.startLoading());
     try {
       const response = await login_user_service(email, password);
-      console.log(response.data, "response-");
       if (response.data.success) {
         dispatch(slice.actions.setUserDetails(response.data));
       } else {
         dispatch(slice.actions.setUserDetails(response.data.data));
       }
-      setAuth({ token: response.data.data.accessToken })
-      return response.data
+      setAuth({ token: response.data.data.accessToken });
+      return response.data;
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

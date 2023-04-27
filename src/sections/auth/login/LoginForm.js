@@ -59,8 +59,6 @@ export default function LoginForm(props) {
 
   const { objUserDetails } = useSelector((state) => state.userInfo);
 
-  console.log(objUserDetails, 'objUserDetails-');
-
   const onSubmit = async (data) => {
     try {
       let res = await dispatch(login_user_slice(data.email, data.password));
@@ -89,6 +87,7 @@ export default function LoginForm(props) {
     if (objCart && query?.isCartAction) {
       push('/dashboard/e-commerce/checkout/');
     } else {
+      console.log('called--');
       localStorage.removeItem('objCart');
       push({
         pathname: '/',

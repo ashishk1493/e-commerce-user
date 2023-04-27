@@ -19,6 +19,8 @@ import MenuMobile from './MenuMobile';
 import navConfig from './MenuConfig';
 import { getAuth, removeAuth } from 'services/identity.service';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setUserDetails } from 'src/redux/slices/userInfo';
 
 // ----------------------------------------------------------------------
 
@@ -58,6 +60,7 @@ export default function MainHeader() {
 
   const isHome = pathname === '/';
   const auth = getAuth();
+  const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -71,6 +74,12 @@ export default function MainHeader() {
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
+
+  const handleLogout = () => {
+    removeAuth();
+    push('/auth/login');
+    dispatch(setUserDetails({}));
+  };
 
   return (
     <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
@@ -147,8 +156,7 @@ export default function MainHeader() {
               sx={{ p: 2 }}
               style={{ minWidth: '200px', cursor: 'pointer' }}
               onClick={() => {
-                removeAuth();
-                push('/auth/login');
+                handleLogout();
               }}
             >
               Logout
