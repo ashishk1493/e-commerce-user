@@ -40,7 +40,7 @@ export default function CheckoutCart() {
 
   const isEmptyCart = cart?.length === 0;
 
-  console.log(cart, "cart--");
+  console.log(cart, 'cart--');
   // getCartProducts
   useEffect(() => {
     dispatch(getCartProducts());
@@ -52,25 +52,6 @@ export default function CheckoutCart() {
 
   const handleNextStep = () => {
     dispatch(onNextStep());
-  };
-
-  useEffect(() => {
-    let objCart = localStorage.getItem('objCart')
-    if (objCart) {
-      let objTmp = JSON.parse(objCart)
-      addProductCartFromLocalstorage(objTmp.product_id, objTmp.cartQty)
-    }
-  }, [])
-
-  const addProductCartFromLocalstorage = async (product_id, qty) => {
-    const response = await addProductToCart(product_id, qty);
-    if (response.data.success == 'true') {
-      console.log(response.data.message, 'response true');
-      PAnotifySuccess(response.data.message);
-      dispatch(getCartProducts());
-    } else {
-      PAnotifyError(response.data.message);
-    }
   };
 
   const handleIncreaseQuantity = async (product_id) => {

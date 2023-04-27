@@ -26,6 +26,7 @@ import {
   ShopProductSearch,
 } from '../../../sections/@dashboard/e-commerce/shop';
 import CartWidget from '../../../sections/@dashboard/e-commerce/CartWidget';
+import { getAuth } from 'services/identity.service';
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +40,7 @@ export default function EcommerceShop() {
   const { themeStretch } = useSettings();
 
   const dispatch = useDispatch();
-  const auth = getAuth()
+  const auth = getAuth();
 
   const [openFilter, setOpenFilter] = useState(false);
 
@@ -145,7 +146,7 @@ export default function EcommerceShop() {
 
   return (
     <Page title="Ecommerce: Shop">
-      <Container maxWidth={themeStretch ? false : 'lg'} style={{ marginTop: "80px" }}>
+      <Container maxWidth={themeStretch ? false : 'lg'} style={{ marginTop: '80px' }}>
         <HeaderBreadcrumbs
           heading="Shop"
           links={[
@@ -205,9 +206,7 @@ export default function EcommerceShop() {
         </Stack>
 
         <ShopProductList products={products} loading={!products.length && isDefault} />
-        {auth &&
-          <CartWidget />
-        }
+        {auth && <CartWidget />}
       </Container>
     </Page>
   );

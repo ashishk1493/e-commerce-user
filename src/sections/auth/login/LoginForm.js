@@ -28,7 +28,7 @@ import 'react-toastify/dist/ReactToastify.css'; // import first
 
 export default function LoginForm(props) {
   const { login } = useAuth();
-  const { pathname, push } = useRouter();
+  const { pathname, push, query } = useRouter();
 
   const isMountedRef = useIsMountedRef();
 
@@ -57,13 +57,13 @@ export default function LoginForm(props) {
     formState: { errors, isSubmitting },
   } = methods;
 
-  // const { objUserDetails } = useSelector(state => state.userInfo)
   const { objUserDetails } = useSelector((state) => state.userInfo);
 
-  console.log(objUserDetails, "objUserDetails-");
+  console.log(objUserDetails, 'objUserDetails-');
+
   const onSubmit = async (data) => {
     try {
-      let res = await dispatch(login_user_slice(data.email, data.password))
+      let res = await dispatch(login_user_slice(data.email, data.password));
     } catch (error) {
       console.error(error);
       reset();
@@ -73,29 +73,29 @@ export default function LoginForm(props) {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(props, "lalalal");
-  // }, [props.router]);
-
   useEffect(() => {
     if (objUserDetails) {
-      if (objUserDetails.success == "true") {
-        redirectAfterLogin()
-      } else if (objUserDetails.success == "false") {
-        PAnotifyError(objUserDetails.message)
+      if (objUserDetails.success == 'true') {
+        redirectAfterLogin();
+      } else if (objUserDetails.success == 'false') {
+        PAnotifyError(objUserDetails.message);
       }
     }
-  }, [objUserDetails])
+  }, [objUserDetails]);
 
   const redirectAfterLogin = () => {
-    let objCart = localStorage.getItem('objCart')
-    console.log(objCart, "objCart");
-    if (objCart) {
-      push('/dashboard/e-commerce/checkout/')
+    let objCart = localStorage.getItem('objCart');
+
+    if (objCart && query?.isCartAction) {
+      push('/dashboard/e-commerce/checkout/');
     } else {
-      push('/');
+      localStorage.removeItem('objCart');
+      push({
+        pathname: '/',
+        query: { isLoggedin: true },
+      });
     }
-  }
+  };
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>

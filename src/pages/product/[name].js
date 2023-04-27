@@ -89,7 +89,7 @@ export default function EcommerceProductDetails() {
   const { themeStretch } = useSettings();
 
   const dispatch = useDispatch();
-  const auth = getAuth()
+  const auth = getAuth();
 
   const [value, setValue] = useState('1');
   const [cartQty, setCartQty] = useState(1);
@@ -113,8 +113,6 @@ export default function EcommerceProductDetails() {
   }, [product]);
 
   const handleAddCart = async (product_id) => {
-    let auth = getAuth()
-    console.log(auth, "auth-=-=");
     if (auth) {
       const response = await addProductToCart(product_id, cartQty);
       if (response?.data?.success == 'true') {
@@ -129,12 +127,12 @@ export default function EcommerceProductDetails() {
         }
       }
     } else {
-      let objCart = { product_id, cartQty }
-      localStorage.setItem("objCart", JSON.stringify(objCart))
+      let objCart = { product_id, cartQty };
+      localStorage.setItem('objCart', JSON.stringify(objCart));
       push({
-        pathname: '/auth/login/',
-        state: { isCartAction: true }
-      })
+        pathname: '/auth/login',
+        query: { isCartAction: true },
+      });
     }
   };
 
@@ -161,9 +159,7 @@ export default function EcommerceProductDetails() {
           ]}
         />
 
-        {auth &&
-          <CartWidget />
-        }
+        {auth && <CartWidget />}
 
         {product && (
           <>

@@ -21,6 +21,8 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // import first
+import { useRouter } from 'next/router';
+import { getAuth } from 'services/identity.service';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(() => ({
@@ -43,17 +45,31 @@ HomePage.getLayout = function getLayout(page) {
 
 export default function HomePage() {
   const { objUserDetails } = useSelector((state) => state.userInfo);
+  const router = useRouter();
+  const auth = getAuth();
+
   useEffect(() => {
-    if (objUserDetails) {
-      if (objUserDetails.success == "true") {
-        PAnotifySuccess(objUserDetails.message)
-      } else if (objUserDetails.success == "false") {
-        PAnotifyError(objUserDetails.message)
+    if (router.query?.isLoggedin) {
+      if (auth) {
+        PAnotifySuccess(objUserDetails.message);
+      } else if (objUserDetails.success == 'false') {
+        PAnotifyError(objUserDetails.message);
       }
     }
-  }, [objUserDetails])
+  }, [objUserDetails]);
+
+  // useEffect(() => {
+  //   if (objUserDetails) {
+  //     if (objUserDetails.success == 'true') {
+  //       PAnotifySuccess(objUserDetails.message);
+  //     } else if (objUserDetails.success == 'false') {
+  //       PAnotifyError(objUserDetails.message);
+  //     }
+  //   }
+  // }, [objUserDetails]);
+
   return (
-    <Page title="The starting point for your next project" style={{ marginTop: "80px" }}>
+    <Page title="The starting point for your next project" style={{ marginTop: '80px' }}>
       <RootStyle>
         <HomeHero />
         <ContentStyle>

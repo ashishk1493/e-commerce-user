@@ -69,11 +69,6 @@ export default function MainHeader() {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {
-    removeAuth();
-    push('/auth/login');
-  };
-
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
@@ -104,21 +99,15 @@ export default function MainHeader() {
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
           {auth && auth.token ? (
-            ""
+            ''
           ) : (
-            <Button
-              variant="outlined"
-              target="_self"
-              rel="noopener"
-              href="/auth/login/"
-              style={{ marginRight: '10px' }}
-            >
+            <Button variant="outlined" target="_self" rel="noopener" href="/auth/login" style={{ marginRight: '10px' }}>
               Sign in
             </Button>
           )}
 
           {auth && auth.token ? (
-            ""
+            ''
           ) : (
             <Button variant="contained" target="_self" rel="noopener" href="/auth/register/">
               Sign up
@@ -154,7 +143,14 @@ export default function MainHeader() {
             <Typography sx={{ p: 2 }} style={{ minWidth: '200px', cursor: 'pointer' }}>
               Profile
             </Typography>
-            <Typography sx={{ p: 2 }} style={{ minWidth: '200px', cursor: 'pointer' }} onClick={handleLogout}>
+            <Typography
+              sx={{ p: 2 }}
+              style={{ minWidth: '200px', cursor: 'pointer' }}
+              onClick={() => {
+                removeAuth();
+                push('/auth/login');
+              }}
+            >
               Logout
             </Typography>
           </Popover>

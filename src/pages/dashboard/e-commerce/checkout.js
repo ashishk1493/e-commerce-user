@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import { Box, Grid, Step, Stepper, Container, StepLabel, StepConnector } from '@mui/material';
 // redux
 import { useDispatch, useSelector } from '../../../redux/store';
-import { getCart, createBilling, onGotoStep } from '../../../redux/slices/product';
+import { getCart, createBilling, onGotoStep, getCartProducts } from '../../../redux/slices/product';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // hooks
@@ -25,6 +25,8 @@ import {
   CheckoutBillingAddress,
 } from '../../../sections/@dashboard/e-commerce/checkout';
 import { isUnauthorizedRequest } from 'services/identity.service';
+import { addProductToCart } from 'services/products.service';
+import { PAnotifyError, PAnotifySuccess } from 'src/utils/tostMessage';
 
 // ----------------------------------------------------------------------
 
@@ -99,6 +101,26 @@ export default function EcommerceCheckout() {
   const { cart, billing, activeStep } = checkout;
 
   const isComplete = activeStep === STEPS.length;
+
+  useEffect(() => {
+    let objCart = localStorage.getItem('objCart');
+    if (objCart) {
+      dispatch(onGotoStep(0));
+      let objTmp = JSON.parse(objCart);
+      addProductCartFromLocalstorage(objTmp.product_id, objTmp.cartQty);
+    }
+  }, []);
+
+  const addProductCartFromLocalstorage = async (product_id, qty) => {
+    const response = await addProductToCart(product_id, qty);
+    if (response.data.success == 'true') {
+      localStorage.removeItem('objCart');
+      PAnotifySuccess(response.data.message);
+      dispatch(getCartProducts());
+    } else {
+      PAnotifyError(response.data.message);
+    }
+  };
 
   useEffect(() => {
     if (isMountedRef.current) {
