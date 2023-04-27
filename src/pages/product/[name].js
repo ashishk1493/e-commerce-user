@@ -42,6 +42,7 @@ import { PAnotifyError, PAnotifySuccess } from 'src/utils/tostMessage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // import first
 import PAProductHomeSlider from 'src/sections/home/PAProductHomeSlider';
+import { getAuth } from 'services/identity.service';
 
 // ----------------------------------------------------------------------
 
@@ -88,11 +89,12 @@ export default function EcommerceProductDetails() {
   const { themeStretch } = useSettings();
 
   const dispatch = useDispatch();
+  const auth = getAuth()
 
   const [value, setValue] = useState('1');
   const [cartQty, setCartQty] = useState(1);
 
-  const { query } = useRouter();
+  const { query, push } = useRouter();
 
   const { name } = query;
 
@@ -111,17 +113,28 @@ export default function EcommerceProductDetails() {
   }, [product]);
 
   const handleAddCart = async (product_id) => {
-    const response = await addProductToCart(product_id, cartQty);
-    if (response?.data?.success == 'true') {
-      PAnotifySuccess(response.data.message);
-      dispatch(getCartProducts());
+    let auth = getAuth()
+    console.log(auth, "auth-=-=");
+    if (auth) {
+      const response = await addProductToCart(product_id, cartQty);
+      if (response?.data?.success == 'true') {
+        PAnotifySuccess(response.data.message);
+        dispatch(getCartProducts());
+      } else {
+        if (response?.data?.message) {
+          PAnotifyError(response.data.message);
+        }
+        if (response?.message) {
+          PAnotifyError(response.message);
+        }
+      }
     } else {
-      if (response?.data?.message) {
-        PAnotifyError(response.data.message);
-      }
-      if (response?.message) {
-        PAnotifyError(response.message);
-      }
+      let objCart = { product_id, cartQty }
+      localStorage.setItem("objCart", JSON.stringify(objCart))
+      push({
+        pathname: '/auth/login/',
+        state: { isCartAction: true }
+      })
     }
   };
 
@@ -148,7 +161,9 @@ export default function EcommerceProductDetails() {
           ]}
         />
 
-        <CartWidget />
+        {auth &&
+          <CartWidget />
+        }
 
         {product && (
           <>

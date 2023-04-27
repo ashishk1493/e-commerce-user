@@ -103,7 +103,9 @@ export default function MainHeader() {
           <Box sx={{ flexGrow: 1 }} />
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
-          {auth && !auth.token ? (
+          {auth && auth.token ? (
+            ""
+          ) : (
             <Button
               variant="outlined"
               target="_self"
@@ -113,16 +115,14 @@ export default function MainHeader() {
             >
               Sign in
             </Button>
-          ) : (
-            ''
           )}
 
-          {auth && !auth.token ? (
+          {auth && auth.token ? (
+            ""
+          ) : (
             <Button variant="contained" target="_self" rel="noopener" href="/auth/register/">
               Sign up
             </Button>
-          ) : (
-            ''
           )}
 
           {auth && auth.token ? (

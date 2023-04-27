@@ -17,6 +17,8 @@ import Logo from '../../components/Logo';
 import Image from '../../components/Image';
 // sections
 import { LoginForm } from '../../sections/auth/login';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 // ----------------------------------------------------------------------
 
@@ -63,13 +65,16 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Login() {
+export default function Login(props) {
   const { method } = useAuth();
+  const router = useRouter();
 
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
-
+  useEffect(() => {
+    console.log(window.history.state, "lalalal");
+  }, [props]);
   return (
     <GuestGuard>
       <Page title="Login">

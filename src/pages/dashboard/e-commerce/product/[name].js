@@ -72,6 +72,7 @@ EcommerceProductDetails.getLayout = function getLayout(page) {
 
 export default function EcommerceProductDetails() {
   const { themeStretch } = useSettings();
+  const auth = getAuth()
 
   const dispatch = useDispatch();
 
@@ -114,7 +115,9 @@ export default function EcommerceProductDetails() {
           ]}
         />
 
-        <CartWidget />
+        {auth &&
+          <CartWidget />
+        }
 
         {product && (
           <>

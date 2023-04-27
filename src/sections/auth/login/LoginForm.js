@@ -26,7 +26,7 @@ import 'react-toastify/dist/ReactToastify.css'; // import first
 
 // ----------------------------------------------------------------------
 
-export default function LoginForm() {
+export default function LoginForm(props) {
   const { login } = useAuth();
   const { pathname, push } = useRouter();
 
@@ -73,15 +73,29 @@ export default function LoginForm() {
     }
   };
 
+  // useEffect(() => {
+  //   console.log(props, "lalalal");
+  // }, [props.router]);
+
   useEffect(() => {
     if (objUserDetails) {
       if (objUserDetails.success == "true") {
-        push('/');
+        redirectAfterLogin()
       } else if (objUserDetails.success == "false") {
         PAnotifyError(objUserDetails.message)
       }
     }
   }, [objUserDetails])
+
+  const redirectAfterLogin = () => {
+    let objCart = localStorage.getItem('objCart')
+    console.log(objCart, "objCart");
+    if (objCart) {
+      push('/dashboard/e-commerce/checkout/')
+    } else {
+      push('/');
+    }
+  }
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>

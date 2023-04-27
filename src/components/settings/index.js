@@ -23,6 +23,7 @@ import SettingDirection from './SettingDirection';
 import SettingFullscreen from './SettingFullscreen';
 import SettingColorPresets from './SettingColorPresets';
 import CartWidget from 'src/sections/@dashboard/e-commerce/CartWidget';
+import { getAuth } from 'services/identity.service';
 
 // ----------------------------------------------------------------------
 
@@ -51,7 +52,7 @@ const RootStyle = styled(m.div)(({ theme }) => ({
 export default function Settings() {
   const { themeMode, themeDirection, themeColorPresets, themeStretch, themeLayout, onResetSetting } = useSettings();
   const [open, setOpen] = useState(false);
-
+  const auth = getAuth()
   const notDefault =
     themeMode !== defaultSettings.themeMode ||
     themeDirection !== defaultSettings.themeDirection ||
@@ -95,7 +96,9 @@ export default function Settings() {
         onClick={handleClose}
         sx={{ background: 'transparent', zIndex: (theme) => theme.zIndex.drawer + 1 }}
       />
-      <CartWidget />
+      {auth &&
+        <CartWidget />
+      }
       {/* {!open && <ToggleButton open={open} notDefault={notDefault} onToggle={handleToggle} />} */}
 
       <AnimatePresence>

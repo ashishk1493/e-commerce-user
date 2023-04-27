@@ -39,6 +39,7 @@ export default function EcommerceShop() {
   const { themeStretch } = useSettings();
 
   const dispatch = useDispatch();
+  const auth = getAuth()
 
   const [openFilter, setOpenFilter] = useState(false);
 
@@ -204,7 +205,9 @@ export default function EcommerceShop() {
         </Stack>
 
         <ShopProductList products={products} loading={!products.length && isDefault} />
-        <CartWidget />
+        {auth &&
+          <CartWidget />
+        }
       </Container>
     </Page>
   );
