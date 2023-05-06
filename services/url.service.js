@@ -24,14 +24,18 @@ export const CHECKSUBTRANSACTION_URL = (parentId, pgTransactionId) =>
 export const LOGIN_USER_URL = () => UrlParamsReplace('/auth/signin/user', {});
 
 // products
-export const GET_ALL_PRODUCTS_URL = (cat, gender, pricelt, pricegt, sort) =>
-  UrlParamsReplace('/user/all-new-products?cat=:cat&gender=:gender&pricelt=:pricelt&pricegt=:pricegt&sort=:sort', {
-    cat,
-    gender,
-    pricelt,
-    pricegt,
-    sort,
-  });
+export const GET_ALL_PRODUCTS_URL = (cat, gender, pricelt, pricegt, sort, search) =>
+  UrlParamsReplace(
+    '/user/all-new-products?cat=:cat&gender=:gender&pricelt=:pricelt&pricegt=:pricegt&sort=:sort&search=:search',
+    {
+      cat,
+      gender,
+      pricelt,
+      pricegt,
+      sort,
+      search,
+    }
+  );
 export const GET_PRODUCT_BY_ID_URL = (productId) => UrlParamsReplace('/user/new-product/:productId', { productId });
 export const GET_ALL_CATEGORIES_URL = () => UrlParamsReplace('/user/all-categories', {});
 export const GET_PRODUCT_BY_CAT_ID_URL = (category_id, productId) =>

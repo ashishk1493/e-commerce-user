@@ -249,7 +249,7 @@ export default function HomeMinimal() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProducts('', '', '', ''));
+    dispatch(getProducts('', '', '', '', '', ''));
   }, [dispatch]);
 
   return (

@@ -31,8 +31,8 @@ import {
 //   return HttpService.postWithAuth(ADD_MONEY_AND_PLACE_ORDER(parentId, kidId), {amount});
 // };
 
-export const getAllProducts = (cat, gender, pricelt, pricegt, sort) => {
-  return HttpService.getWithOutAuth(GET_ALL_PRODUCTS_URL(cat, gender, pricelt, pricegt, sort));
+export const getAllProducts = (cat, gender, pricelt, pricegt, sort, search) => {
+  return HttpService.getWithOutAuth(GET_ALL_PRODUCTS_URL(cat, gender, pricelt, pricegt, sort, search));
 };
 
 export const getAllCategories = () => {

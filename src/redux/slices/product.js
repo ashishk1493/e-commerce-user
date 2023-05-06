@@ -229,12 +229,12 @@ export const {
 
 // ----------------------------------------------------------------------
 
-export function getProducts(cat, gender, pricelt, pricegt, sort) {
+export function getProducts(cat, gender, pricelt, pricegt, sort, search) {
   console.log(gender, 'gender--');
   return async () => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await getAllProducts(cat, gender, pricelt, pricegt, sort);
+      const response = await getAllProducts(cat, gender, pricelt, pricegt, sort, search);
       dispatch(slice.actions.getProductsSuccess(response.data.data.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));

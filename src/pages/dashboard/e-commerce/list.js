@@ -96,7 +96,7 @@ export default function EcommerceProductList() {
   const [filterName, setFilterName] = useState('');
 
   useEffect(() => {
-    dispatch(getProducts('', '', '', ''));
+    dispatch(getProducts('', '', '', '', '', ''));
   }, [dispatch]);
 
   useEffect(() => {

@@ -41,7 +41,7 @@ export default function EcommerceProductEdit() {
   const currentProduct = products.find((product) => paramCase(product.name) === name);
 
   useEffect(() => {
-    dispatch(getProducts('', '', '', ''));
+    dispatch(getProducts('', '', '', '', '', ''));
   }, [dispatch]);
 
   return (

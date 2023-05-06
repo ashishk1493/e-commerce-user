@@ -107,7 +107,7 @@ export default function EcommerceShop() {
   }
 
   useEffect(() => {
-    dispatch(getProducts(cat, genderArr, pricelt, pricegt, sort));
+    dispatch(getProducts(cat, genderArr, pricelt, pricegt, sort, ''));
   }, [dispatch, filters, sortBy]);
 
   useEffect(() => {

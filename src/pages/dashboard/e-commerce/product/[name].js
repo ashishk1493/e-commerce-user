@@ -28,6 +28,7 @@ import {
   ProductDetailsCarousel,
 } from '../../../../sections/@dashboard/e-commerce/product-details';
 import CartWidget from '../../../../sections/@dashboard/e-commerce/CartWidget';
+import { getAuth } from 'services/identity.service';
 
 // ----------------------------------------------------------------------
 
@@ -72,7 +73,7 @@ EcommerceProductDetails.getLayout = function getLayout(page) {
 
 export default function EcommerceProductDetails() {
   const { themeStretch } = useSettings();
-  const auth = getAuth()
+  const auth = getAuth();
 
   const dispatch = useDispatch();
 
@@ -95,7 +96,7 @@ export default function EcommerceProductDetails() {
   const handleGotoStep = (step) => {
     dispatch(onGotoStep(step));
   };
-  console.log(product, "product");
+  console.log(product, 'product');
   return (
     <Page title="Ecommerce: Product Details">
       <Container maxWidth={themeStretch ? false : 'lg'}>
@@ -115,9 +116,7 @@ export default function EcommerceProductDetails() {
           ]}
         />
 
-        {auth &&
-          <CartWidget />
-        }
+        {auth && <CartWidget />}
 
         {product && (
           <>
