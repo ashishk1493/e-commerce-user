@@ -68,7 +68,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
     totalRating,
     totalReview,
     inventoryType,
-    mrp
+    mrp,
   } = product;
 
   // const alreadyProduct = cart.map((item) => item.id).includes(id);
@@ -116,16 +116,16 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
       console.error(error);
     }
   };
-
+  console.log(qty, 'inventoryType-');
   return (
     <RootStyle {...other}>
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Label
           variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
-          color={inventoryType === 'in-Stock' ? 'success' : 'error'}
+          color={qty > 0 ? 'success' : 'error'}
           sx={{ textTransform: 'uppercase' }}
         >
-          {sentenceCase(inventoryType || '')}
+          {qty == 0 ? 'Out of Stock' : sentenceCase(inventoryType || '')}
         </Label>
 
         <Typography
@@ -158,34 +158,37 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
           </Box>
           &nbsp;{fCurrency(price)}
         </Typography>
-        {colors.length ?
-          <Divider sx={{ borderStyle: 'dashed' }} /> : ""}
+        {colors.length ? <Divider sx={{ borderStyle: 'dashed' }} /> : ''}
 
-        {colors.length ? <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 3 }}>
-          <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
-            Color
-          </Typography>
+        {colors.length ? (
+          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 3 }}>
+            <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
+              Color
+            </Typography>
 
-          <Controller
-            name="color"
-            control={control}
-            render={({ field }) => (
-              <ColorSinglePicker
-                colors={colors}
-                value={field.value}
-                onChange={field.onChange}
-                sx={{
-                  ...(colors.length > 4 && {
-                    maxWidth: 144,
-                    justifyContent: 'flex-end',
-                  }),
-                }}
-              />
-            )}
-          />
-        </Stack> : ""}
+            <Controller
+              name="color"
+              control={control}
+              render={({ field }) => (
+                <ColorSinglePicker
+                  colors={colors}
+                  value={field.value}
+                  onChange={field.onChange}
+                  sx={{
+                    ...(colors.length > 4 && {
+                      maxWidth: 144,
+                      justifyContent: 'flex-end',
+                    }),
+                  }}
+                />
+              )}
+            />
+          </Stack>
+        ) : (
+          ''
+        )}
 
-        {sizes.length ?
+        {sizes.length ? (
           <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
             <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
               Size
@@ -211,7 +214,9 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
               ))}
             </RHFSelect>
           </Stack>
-          : ""}
+        ) : (
+          ''
+        )}
 
         <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ mt: 0.5 }}>
@@ -237,7 +242,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
         <Stack direction="row" spacing={2} sx={{ mt: 5 }}>
           <Button
             fullWidth
-            // disabled={isMaxQuantity}
+            disabled={qty == 0}
             size="large"
             color="warning"
             variant="contained"
@@ -248,7 +253,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
             Add to Cart
           </Button>
 
-          <Button fullWidth size="large" type="submit" variant="contained">
+          <Button disabled={qty == 0} fullWidth size="large" type="submit" variant="contained">
             Buy Now
           </Button>
         </Stack>
