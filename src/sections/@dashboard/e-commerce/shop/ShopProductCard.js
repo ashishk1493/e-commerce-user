@@ -41,14 +41,6 @@ export default function ShopProductCard({ product }) {
     }
   };
 
-  const handleAddCart = async () => {
-    try {
-      commanCart(product.id, 1, push);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <Card style={{ margin: "10px" }}
       onMouseEnter={e => {
