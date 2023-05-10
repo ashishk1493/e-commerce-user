@@ -42,7 +42,7 @@ export default function PAProductHomeSlider({ products }) {
       },
     ],
   };
-  console.log(products, 'products-');
+
   return (
     <Slider {...settings}>
       {products?.map((product, index) =>
