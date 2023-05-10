@@ -43,6 +43,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // import first
 import PAProductHomeSlider from 'src/sections/home/PAProductHomeSlider';
 import { getAuth } from 'services/identity.service';
+import { commanCart } from 'src/utils/product-utils';
 
 // ----------------------------------------------------------------------
 
@@ -112,29 +113,8 @@ export default function EcommerceProductDetails() {
     }
   }, [product]);
 
-  const handleAddCart = async (product_id) => {
-    if (auth) {
-      const response = await addProductToCart(product_id, cartQty);
-      if (response?.data?.success == 'true') {
-        PAnotifySuccess(response.data.message);
-        dispatch(getCartProducts());
-      } else {
-        if (response?.data?.message) {
-          PAnotifyError(response.data.message);
-        }
-        if (response?.message) {
-          PAnotifyError(response.message);
-        }
-      }
-    } else {
-      let objCart = { product_id, cartQty };
-      localStorage.setItem('objCart', JSON.stringify(objCart));
-      push({
-        pathname: '/auth/login',
-        query: { isCartAction: true },
-      });
-    }
-  };
+
+  const handleAddCart = commanCart;
 
   const handleGotoStep = (step) => {
     dispatch(onGotoStep(0));

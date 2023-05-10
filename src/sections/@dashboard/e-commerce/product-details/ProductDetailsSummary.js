@@ -111,7 +111,7 @@ export default function ProductDetailsSummary({ cart, product, onAddCart, onGoto
 
   const handleAddCart = async () => {
     try {
-      onAddCart(product.id);
+      onAddCart(product.id, cartQty, push);
     } catch (error) {
       console.error(error);
     }

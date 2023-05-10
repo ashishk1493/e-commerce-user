@@ -99,7 +99,7 @@ export default function Settings() {
       {auth &&
         <CartWidget />
       }
-      {/* {!open && <ToggleButton open={open} notDefault={notDefault} onToggle={handleToggle} />} */}
+      {!open && <ToggleButton open={open} notDefault={notDefault} onToggle={handleToggle} />}
 
       <AnimatePresence>
         {open && (

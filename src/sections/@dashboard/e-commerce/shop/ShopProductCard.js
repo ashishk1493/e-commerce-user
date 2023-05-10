@@ -12,6 +12,10 @@ import { fCurrency } from '../../../../utils/formatNumber';
 import Label from '../../../../components/Label';
 import Image from '../../../../components/Image';
 import { ColorPreview } from '../../../../components/color-utils';
+import { useState } from 'react';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { commanCart } from 'src/utils/product-utils';
+import { useRouter } from 'next/router';
 
 // ----------------------------------------------------------------------
 
@@ -20,15 +24,33 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
+  const { push } = useRouter();
+
   console.log(product, "product---");
   const { name, price, colors, status, priceSale, images } = product;
+  const [style, setStyle] = useState({ display: 'none' });
 
   // const linkTo = PATH_DASHBOARD.eCommerce.view(paramCase(name));
   const linkTo = `/product/${product.id}`
 
+  const handleAddCart = async () => {
+    try {
+      commanCart(product.id, 1, push);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <Card style={{ margin: "10px" }}>
-      <Box sx={{ position: 'relative' }}>
+    <Card style={{ margin: "10px" }}
+      onMouseEnter={e => {
+        setStyle({ display: 'flex' });
+      }}
+      onMouseLeave={e => {
+        setStyle({ display: 'none' })
+      }}
+    >
+      <Box sx={{ position: 'relative', padding: '8px', borderRadius: "10px" }}>
         {status && (
           <Label
             variant="filled"
@@ -44,7 +66,26 @@ export default function ShopProductCard({ product }) {
             {status}
           </Label>
         )}
-        <Image alt={name} src={`http://localhost:8080${images[0]}`} ratio="1/1" />
+        <div style={{
+          ...style,
+          bottom: 16,
+          right: 16,
+          zIndex: 9,
+          position: 'absolute',
+          textTransform: 'uppercase',
+          backgroundColor: 'rgb(255, 171, 0)',
+          height: '48px',
+          width: '48px',
+          borderRadius: '50%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          cursor: 'pointer'
+        }}
+          onClick={() => handleAddCart()}
+        >
+          <AddShoppingCartIcon style={{ color: 'black' }} />
+        </div>
+        <Image alt={name} src={`http://localhost:8080${images[0]}`} ratio="1/1" style={{ borderRadius: "10px" }} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
