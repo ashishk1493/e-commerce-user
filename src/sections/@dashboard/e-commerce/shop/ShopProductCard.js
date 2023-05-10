@@ -3,7 +3,7 @@ import { paramCase } from 'change-case';
 // next
 import NextLink from 'next/link';
 // @mui
-import { Box, Card, Link, Typography, Stack } from '@mui/material';
+import { Box, Card, Link, Typography, Stack, Grid } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // utils
@@ -31,7 +31,15 @@ export default function ShopProductCard({ product }) {
   const [style, setStyle] = useState({ display: 'none' });
 
   // const linkTo = PATH_DASHBOARD.eCommerce.view(paramCase(name));
-  const linkTo = `/product/${product.id}`
+  const linkTo = `/product/${product.id}`;
+
+  const handleAddCart = async () => {
+    try {
+      commanCart(product.id, 1, push);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleAddCart = async () => {
     try {

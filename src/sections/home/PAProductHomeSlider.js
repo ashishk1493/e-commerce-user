@@ -6,15 +6,41 @@ import { ShopProductCard } from '../@dashboard/e-commerce/shop';
 // import { baseUrl } from "./config";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import PropTypes from 'prop-types';
 
-export default function PAProductHomeSlider(props) {
-  const { products } = props;
+export default function PAProductHomeSlider({ products }) {
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: products.length > 4,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 3,
+    responsive: [
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 1,
+        },
+      },
+      {
+        breakpoint: 760,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 960,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          initialSlide: 3,
+        },
+      },
+    ],
   };
 
   return (
@@ -25,3 +51,7 @@ export default function PAProductHomeSlider(props) {
     </Slider>
   );
 }
+
+PAProductHomeSlider.propTypes = {
+  products: PropTypes.array,
+};

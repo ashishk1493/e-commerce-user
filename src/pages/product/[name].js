@@ -217,7 +217,7 @@ export default function EcommerceProductDetails() {
               <Typography variant="h3">Related Products</Typography>
             </div>
           </Box>
-          <PAProductHomeSlider products={productSimiler} />
+          <PAProductHomeSlider products={productSimiler || []} />
         </div>
         {!product && <SkeletonProduct />}
 
