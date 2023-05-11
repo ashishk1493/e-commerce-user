@@ -1,5 +1,6 @@
-export { default as AccountBilling } from './AccountBilling';
+export { default as UserOrders } from './UserOrders';
 export { default as AccountGeneral } from './AccountGeneral';
+export { default as AccountBilling } from './AccountBilling';
 export { default as AccountSocialLinks } from './AccountSocialLinks';
 export { default as AccountNotifications } from './AccountNotifications';
 export { default as AccountChangePassword } from './AccountChangePassword';

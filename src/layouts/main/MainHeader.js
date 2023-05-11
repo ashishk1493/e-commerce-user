@@ -149,7 +149,11 @@ export default function MainHeader() {
               horizontal: 'right',
             }}
           >
-            <Typography sx={{ p: 2 }} style={{ minWidth: '200px', cursor: 'pointer' }}>
+            <Typography sx={{ p: 2 }} style={{ minWidth: '200px', cursor: 'pointer' }}
+              onClick={() => {
+                push('/dashboard/user/account')
+                handleClose()
+              }}>
               Profile
             </Typography>
             <Typography

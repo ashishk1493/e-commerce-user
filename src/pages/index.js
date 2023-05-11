@@ -38,7 +38,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 HomePage.getLayout = function getLayout(page) {
-  return <Layout variant="main">{page}</Layout>;
+  return <Layout>{page}</Layout>;
 };
 
 // ----------------------------------------------------------------------

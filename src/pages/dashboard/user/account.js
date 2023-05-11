@@ -17,9 +17,10 @@ import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 // sections
 import {
   AccountGeneral,
-  AccountBilling,
-  AccountSocialLinks,
-  AccountNotifications,
+  UserOrders,
+  // AccountBilling,
+  // AccountSocialLinks,
+  // AccountNotifications,
   AccountChangePassword,
 } from '../../../sections/@dashboard/user/account';
 
@@ -43,20 +44,20 @@ export default function UserAccount() {
       component: <AccountGeneral />,
     },
     {
-      value: 'billing',
+      value: 'orders',
       icon: <Iconify icon={'ic:round-receipt'} width={20} height={20} />,
-      component: <AccountBilling cards={_userPayment} addressBook={_userAddressBook} invoices={_userInvoices} />,
+      component: <UserOrders cards={_userPayment} addressBook={_userAddressBook} invoices={_userInvoices} />,
     },
-    {
-      value: 'notifications',
-      icon: <Iconify icon={'eva:bell-fill'} width={20} height={20} />,
-      component: <AccountNotifications />,
-    },
-    {
-      value: 'social_links',
-      icon: <Iconify icon={'eva:share-fill'} width={20} height={20} />,
-      component: <AccountSocialLinks myProfile={_userAbout} />,
-    },
+    // {
+    //   value: 'notifications',
+    //   icon: <Iconify icon={'eva:bell-fill'} width={20} height={20} />,
+    //   component: <AccountNotifications />,
+    // },
+    // {
+    //   value: 'social_links',
+    //   icon: <Iconify icon={'eva:share-fill'} width={20} height={20} />,
+    //   component: <AccountSocialLinks myProfile={_userAbout} />,
+    // },
     {
       value: 'change_password',
       icon: <Iconify icon={'ic:round-vpn-key'} width={20} height={20} />,
@@ -65,7 +66,7 @@ export default function UserAccount() {
   ];
 
   return (
-    <Page title="User: Account Settings">
+    <Page title="User: Account Settings" style={{ marginTop: '80px', marginBottom: '30px' }}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading="Account"
